@@ -1,0 +1,26 @@
+.wrapper {
+    width: 100%;
+    min-height: 200px;
+    font-size: 13px;
+    background: #f9f9f9;
+    padding-top: 45px;
+}
+
+.inner {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+    display: block;
+}
+
+.footer-line {
+    display: flex;
+}
+
+.copy-right {
+    width: 100%;
+    min-height: 104px;
+    background-image: url(../../../assets/images/bg-footer.png);
+    padding: 16px 12px;
+    font-weight: 300;
+}

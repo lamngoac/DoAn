@@ -1,0 +1,25 @@
+.wrapper {
+    max-width: 1000px;
+    //background-color: violet;
+    padding: 0 50px;
+    margin-top: 40px;
+}
+
+.inner {
+    display: block;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.border-line {
+    border-bottom: 1px solid #000;
+    min-width: 550px;
+}
+
+.list {
+    margin-top: 40px;
+}

@@ -1,0 +1,37 @@
+.wrapper {
+    display: block;
+    max-width: 1000px;
+    //background-color: aquamarine;
+    margin-top: 40px;
+}
+
+.inner {
+    display: block;
+    width: 100%;
+}
+
+.title {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.img {
+    display: block;
+
+    .img-frame {
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+        margin-bottom: 20px;
+    }
+}
+
+.content {
+    display: block;
+    width: 100%;
+    color: black;
+    font-size: 14px;
+    font-weight: 300;
+}

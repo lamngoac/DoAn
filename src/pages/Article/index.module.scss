@@ -1,0 +1,40 @@
+.wrapper {
+    display: block;
+    max-width: 1000px;
+    //background-color: aquamarine;
+    padding: 0 50px;
+    margin-top: 40px;
+}
+
+.inner {
+    display: block;
+    width: 100%;
+}
+
+.mst-data {
+    display: block;
+    width: 100%;
+}
+
+.title {
+    display: block;
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.desc {
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+.crdate {
+    display: block;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--bs-blue);
+    margin-bottom: 20px;
+}
