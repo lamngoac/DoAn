@@ -1,0 +1,160 @@
+.wrapper {
+    width: 100%;
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+
+.headline {
+    width: 100%;
+    height: 60px;
+    border-top: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+
+    .hmain,
+    .hsub {
+        font-weight: 600;
+        color: var(--bs-darkblue);
+    }
+
+    .hicon {
+        margin: 0 16px;
+        font-size: 14px;
+        color: var(--bs-darkblue);
+    }
+}
+
+.content {
+    width: 100%;
+    margin-top: 24px;
+    padding: 0 12px;
+
+    .book {
+        padding: 12px;
+    }
+}
+
+.tour {
+    width: 100%;
+    max-height: 200px;
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+.tour-img {
+    width: 300px;
+    height: 200px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.tour-info {
+    width: calc(100% - 300px);
+    padding: 12px 24px;
+
+    .tour-name {
+        height: 48px;
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--bs-secondary);
+        margin-bottom: 8px;
+    }
+
+    .tour-date-start,
+    .tour-date-end,
+    .tour-quantity,
+    .tour-price,
+    .tour-total-price {
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--bs-secondary);
+    }
+}
+
+.book-frame {
+    margin-top: 24px;
+}
+
+.book-info {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.pass-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+    width: 50%;
+
+    .pass-name {
+        width: 50%;
+    }
+
+    .pass-gender {
+        width: 20%;
+    }
+
+    .pass-birthday {
+        width: 30%;
+    }
+}
+
+.payment {
+    width: 100%;
+    margin-top: 24px;
+    padding: 24px 12px;
+
+    .payment-method {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 16px;
+    }
+}
+
+.payment-method-title {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.method-item {
+    display: flex;
+    align-items: center;
+    width: 40%;
+    height: 60px;
+    padding: 0 20px;
+    background-color: var(--bs-white);
+    border: 2px solid #eaeaea;
+    border-radius: 10px;
+
+    .method-icon {
+        width: 56px;
+        height: 56px;
+        margin: 0 16px;
+    }
+}
+
+.payment-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    padding: 20px;
+}
+
+.btn-pay {
+    width: 300px;
+    height: 60px;
+    background-color: var(--bs-primary);
+    color: var(--bs-white);
+    font-size: 24px;
+    font-weight: 700;
+    border-radius: 10px;
+}

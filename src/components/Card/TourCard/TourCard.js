@@ -3,12 +3,26 @@ import styles from './TourCard.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faCirclePlus, faCoins, faTicket } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-//import { addToDatabaseCart } from '~/services/cartService';
+import { formatMoney } from '~/services/functionService';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const cx = classNames.bind(styles);
 
 function TourCard({ data = {}, ...passProps }) {
     const navigate = useNavigate();
+
+    const notify = (data, ntype = 'default') =>
+        toast(data, {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            type: ntype,
+        });
 
     const {
         TourCode,
@@ -17,7 +31,6 @@ function TourCard({ data = {}, ...passProps }) {
         TouristNumberLeft,
         GatherTime,
         mt_TourName,
-        //mt_TourType,
         mtt_TourTypeName,
         mt_TourThemePath,
         mt_TourDayDuration,
@@ -26,39 +39,25 @@ function TourCard({ data = {}, ...passProps }) {
         mt_TourPrice,
     } = data;
 
-    function formatMoney(amount, decimalCount = 2, decimal = '.', thousands = ',') {
-        try {
-            decimalCount = Math.abs(decimalCount);
-            decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
-
-            const negativeSign = amount < 0 ? '-' : '';
-
-            let i = parseInt((amount = Math.abs(Number(amount) || 0).toFixed(decimalCount))).toString();
-            let j = i.length > 3 ? i.length % 3 : 0;
-
-            return (
-                negativeSign +
-                (j ? i.substr(0, j) + thousands : '') +
-                i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + thousands) +
-                (decimalCount
-                    ? decimal +
-                      Math.abs(amount - i)
-                          .toFixed(decimalCount)
-                          .slice(2)
-                    : '')
-            );
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
     function handleClickDetail() {
         navigate(`/tour/${IDNo}`);
     }
 
+    function handleClickBook() {
+        // Check if user is logged in
+        if (localStorage.getItem('account')) {
+            navigate('/book/' + IDNo);
+        } else {
+            notify('Vui lòng đăng nhập để đặt tour', 'info');
+            setTimeout(() => {
+                navigate('/login');
+            }, 2000);
+        }
+    }
+
     // If localstorage is empty, create new cart, else push to cart
     function handleClickAddToCart(id) {
-        if (localStorage.getItem('cart') == null) {
+        if (localStorage.getItem('cart') == null || localStorage.getItem('cart') === undefined) {
             localStorage.setItem('cart', JSON.stringify(id));
         } else {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -104,7 +103,7 @@ function TourCard({ data = {}, ...passProps }) {
                     </div>
                     <div className={cx('tour-price')}>{formatMoney(mt_TourPrice, 0)}₫</div>
                     <div className={cx('function')}>
-                        <button className={cx('btn', 'btn-order')} onClick={() => handleClickDetail()}>
+                        <button className={cx('btn', 'btn-order')} onClick={() => handleClickBook()}>
                             <FontAwesomeIcon icon={faCartShopping} className={cx('fa-icon')} />
                             Đặt ngay
                         </button>
@@ -124,6 +123,7 @@ function TourCard({ data = {}, ...passProps }) {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 }

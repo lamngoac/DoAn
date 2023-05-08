@@ -1,0 +1,30 @@
+input {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--bs-secondary);
+}
+
+.cbx-input {
+    width: 100%;
+    height: 36px;
+    padding: 0 12px;
+    outline: none;
+    border-radius: 4px;
+}
+
+.cbx-options {
+    max-height: 120px;
+    max-width: 100%;
+    background-color: var(--bs-white);
+    overflow-y: auto;
+    border-radius: 4px;
+}
+
+.cbx-option {
+    padding: 0 12px;
+
+    &:hover {
+        background-color: var(--bs-secondary);
+        color: var(--bs-white);
+    }
+}

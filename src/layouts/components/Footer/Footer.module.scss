@@ -15,6 +15,20 @@
 
 .footer-line {
     display: flex;
+    width: 100%;
+}
+
+.wide25 {
+    width: 25%;
+}
+
+.wide50 {
+    width: 50%;
+}
+
+.footer-item {
+    padding: 0 12px;
+    margin-bottom: 12px;
 }
 
 .copy-right {
@@ -23,4 +37,41 @@
     background-image: url(../../../assets/images/bg-footer.png);
     padding: 16px 12px;
     font-weight: 300;
+}
+
+.footer-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.footer-list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    .item-w50 {
+        width: 50%;
+    }
+
+    .item-w100 {
+        width: 100%;
+    }
+}
+
+.dblock {
+    display: block;
+}
+
+.link-logo {
+    margin-right: 10px;
+}
+
+.img-logo {
+    width: 36px;
+    height: 36px;
+}
+
+.mb16 {
+    margin-bottom: 16px;
 }

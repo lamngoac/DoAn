@@ -8,10 +8,15 @@ const routes = {
     contact: '/contact',
     search: '/search',
     tour: '/tour/:slug',
-    notfound: '/404',
+    book: '/book/:slug',
+    payment: '/payment/:slug',
+    confirm: '/confirm/:slug',
     login: '/login',
     register: '/register',
     cart: '/cart',
+    notfound: '*',
+    adminDashboard: '/admin/dashboard',
+    adminAccounts: '/admin/accounts',
 };
 
 export default routes;

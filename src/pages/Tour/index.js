@@ -1,5 +1,4 @@
 import classNames from 'classnames/bind';
-import styles from './index.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faBowlFood,
@@ -13,15 +12,21 @@ import {
     faTicket,
     faUserGroup,
 } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faEnvelope, faFlag } from '@fortawesome/free-regular-svg-icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { formatMoney, formatDate } from '~/services/functionService';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import FAQCard from '~/components/Card/FAQCard';
 import images from '~/assets/images';
-import { faCalendarAlt, faEnvelope, faFlag } from '@fortawesome/free-regular-svg-icons';
+import styles from './index.module.scss';
 
 const cx = classNames.bind(styles);
 
 function Tour() {
     const param = useParams();
+    const navigate = useNavigate();
 
     const [imgsLoaded, setImgsLoaded] = useState(false);
 
@@ -30,6 +35,19 @@ function Tour() {
     const [tourSchedule, setTourSchedule] = useState([]);
     const [tourScheduleDtl, setTourScheduleDtl] = useState([]);
     const [tourDestImg, setTourDestImg] = useState([]);
+    const [faq, setFaq] = useState([]);
+
+    const notify = (data, ntype = 'default') =>
+        toast(data, {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            type: ntype,
+        });
 
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
@@ -62,6 +80,34 @@ function Tour() {
         redirect: 'follow',
     };
 
+    var raw_FAQ = JSON.stringify({
+        Rt_Cols_POW_FAQ: '*',
+        ServiceCode: 'WEBAPP',
+        Tid: '20181020.143018.986818',
+        TokenID: 'TOCKENID.IDOCNET',
+        RefreshToken: '',
+        UtcOffset: '7',
+        GwUserCode: 'idocNet.idn.Skycic.Inventory.Sv',
+        GwPassword: 'idocNet.idn.Skycic.Inventory.Sv',
+        WAUserCode: 'SYSADMIN',
+        WAUserPassword: '123456',
+        FlagIsDelete: '0',
+        FlagAppr: '0',
+        FlagIsEndUser: '0',
+        FuncType: null,
+        Ft_RecordStart: '0',
+        Ft_RecordCount: '123456',
+        Ft_WhereClause: '',
+        Ft_Cols_Upd: '',
+    });
+
+    var requestOptions_FAQ = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw_FAQ,
+        redirect: 'follow',
+    };
+
     useEffect(() => {
         fetch('http://localhost:3000/DAMstTour/WA_Mst_TourDetail_GetForViewAll', requestOptions)
             .then((response) => response.json())
@@ -70,53 +116,29 @@ function Tour() {
                 setTourDtlDate(result.Data.Lst_Mst_TourDetailDate);
                 setTourSchedule(result.Data.Lst_Mst_TourSchedule);
                 setTourScheduleDtl(result.Data.Lst_Mst_TourScheduleDetail);
-                setTourDestImg(result.Data.Lst_Mst_TourDestImage);
+                setTourDestImg(result.Data.Lst_Mst_TourDestImages);
                 setImgsLoaded(true);
             })
             .catch((error) => console.log('error', error));
 
+        fetch('http://localhost:3000/DAPFAQ/WA_POW_FAQ_Get', requestOptions_FAQ)
+            .then((response) => response.json())
+            .then((result) => setFaq(result.Data.Lst_POW_FAQ))
+            .catch((error) => console.log('error', error));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    function formatMoney(amount, decimalCount = 2, decimal = '.', thousands = ',') {
-        try {
-            decimalCount = Math.abs(decimalCount);
-            decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
-
-            const negativeSign = amount < 0 ? '-' : '';
-
-            let i = parseInt((amount = Math.abs(Number(amount) || 0).toFixed(decimalCount))).toString();
-            let j = i.length > 3 ? i.length % 3 : 0;
-
-            return (
-                negativeSign +
-                (j ? i.substr(0, j) + thousands : '') +
-                i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + thousands) +
-                (decimalCount
-                    ? decimal +
-                      Math.abs(amount - i)
-                          .toFixed(decimalCount)
-                          .slice(2)
-                    : '')
-            );
-        } catch (e) {
-            console.log(e);
-        }
-    }
 
     // Assign value
     const {
         TourCode,
         IDNo,
-        DateStart,
+        //DateStart,
         TouristNumberLeft,
         TourGuide1,
         TourGuide2,
         GatherDate,
         GatherTime,
         GatherAddress,
-        GoFlightNo,
-        ReturnFlightNo,
         mt_TourName,
         mt_TourDuration,
         mt_TourDayDuration,
@@ -135,6 +157,18 @@ function Tour() {
         mt_TourImage4Path,
     } = tourDtl;
 
+    const handleBookTour = () => {
+        // Check if user is logged in
+        if (localStorage.getItem('account')) {
+            navigate('/book/' + IDNo);
+        } else {
+            notify('Vui lòng đăng nhập để đặt tour', 'info');
+            setTimeout(() => {
+                navigate('/login');
+            }, 2000);
+        }
+    };
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -151,7 +185,7 @@ function Tour() {
                     <div className={cx('head-function')}>
                         <div className={cx('book-reg')}>
                             <span className={cx('book-price')}>{formatMoney(mt_TourPrice, 0)}₫</span>
-                            <button className={cx('book-btn')}>
+                            <button className={cx('book-btn')} onClick={() => handleBookTour()}>
                                 <FontAwesomeIcon icon={faCartShopping} className={cx('fa-icon')} />
                                 Đặt ngay
                             </button>
@@ -308,21 +342,85 @@ function Tour() {
                 </section>
                 <section className={cx('section-dest')}>
                     <h2>Những địa điểm tham quan</h2>
-                    <div className={cx('dest-list')}></div>
-                </section>
-                <section className={cx('section-schedule')}>
-                    <div className={cx('mst-schdule')}></div>
-                    <div className={cx('dtl-schdule')}></div>
-                </section>
-                <section className={cx('section-include')}>
-                    <div className={cx('tour-flight')}></div>
-                    <div className={cx('tour-include')}>
-                        <div className={cx('include-time')}></div>
-                        <div className={cx('include-guide')}></div>
+                    <div className={cx('dest-list')}>
+                        {tourDestImg.map((item, index) => (
+                            <div className={cx('dest-item')} key={index}>
+                                <img className={cx('img-dest')} alt="img" src={require(`../../${item.ImagePath}`)} />
+                            </div>
+                        ))}
                     </div>
                 </section>
-                <section className={cx('section-notice')}></section>
+                <section className={cx('section-schedule')}>
+                    <h2>Lịch trình</h2>
+                    <div className={cx('schedule-content')}>
+                        <div className={cx('mst-schdule')}>
+                            {tourScheduleDtl.map((item, index) => (
+                                <div className={cx('mst-item')} key={index}>
+                                    <span className={cx('date-left')}>Ngày </span>
+                                    <span className={cx('date-center')}>{item.Idx}</span>
+                                    <span className={cx('date-right')}>
+                                        <span className={cx('date')}>{formatDate(tourDtlDate[index].ExactDate)}</span>
+                                        <span className={cx('location')}>{item.Title}</span>
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                        <div className={cx('dtl-schdule')}>
+                            {tourSchedule.map((item, index) => (
+                                <div className={cx('dtl-item')} key={index}>
+                                    <h3>{item.Title}</h3>
+                                    <div className={cx('excerpt')}>
+                                        <span className={cx('line')}></span>
+                                        <div style={{ textAlign: 'justify' }}>{item.Content}</div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+                <section className={cx('section-include')}>
+                    <div className={cx('include-time')}>
+                        <h2>Thông tin tập trung</h2>
+                        <div className={cx('block')}>
+                            <span style={{ width: '50%' }}>Ngày giờ tập trung</span>
+                            <span style={{ width: '50%' }}>
+                                {GatherDate} | {GatherTime}
+                            </span>
+                        </div>
+                        <div className={cx('block')}>
+                            <span style={{ width: '50%' }}>Nơi tập trung</span>
+                            <span style={{ width: '50%' }}>{GatherAddress}</span>
+                        </div>
+                    </div>
+                    <div className={cx('include-guide')}>
+                        <h2>Thông tin hướng dẫn viên</h2>
+                        <div className={cx('guide-item')} style={{ display: 'block' }}>
+                            <div style={{ display: 'block' }}>
+                                <div>HDV dẫn đoàn</div>
+                                <div>PHẠM LÊ HUỲNH ĐỨC 1 {TourGuide1}</div>
+                                <div>190 Pasteur, Vo Thi Sau Ward, District 3, HCM City, Viet Nam</div>
+                                <div>0394422799</div>
+                            </div>
+                            <div style={{ height: '40px' }}></div>
+                            <div style={{ display: 'block' }}>
+                                <div>HDV dẫn đoàn</div>
+                                <div>PHẠM LÊ HUỲNH ĐỨC 2 {TourGuide2}</div>
+                                <div>190 Pasteur, Vo Thi Sau Ward, District 3, HCM City, Viet Nam</div>
+                                <div>0394422799</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section className={cx('section-notice')}>
+                    <h2>Những thông tin cần lưu ý</h2>
+                    <div className={cx('notice-content')}>
+                        {faq.map((item, index) => (
+                            <FAQCard data={item} key={index} />
+                        ))}
+                    </div>
+                </section>
             </div>
+            <ToastContainer />
         </div>
     );
 }

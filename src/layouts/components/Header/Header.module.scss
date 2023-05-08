@@ -75,3 +75,18 @@ input:not(:placeholder-shown) ~ .btn-search {
     background: transparent;
     font-size: 24px;
 }
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-tag {
+    margin-right: 8px;
+}
+
+.img-acc {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}

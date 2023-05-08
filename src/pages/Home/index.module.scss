@@ -1,0 +1,145 @@
+@import '~react-image-gallery/styles/scss/image-gallery.scss';
+
+.wrapper {
+    width: 100%;
+    //background-color: aquamarine;
+}
+
+.search-line {
+    width: calc(100% - 40px);
+    height: 250px;
+
+    position: relative;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    padding: 24px;
+}
+
+.search-title {
+    font-size: 24px;
+    font-weight: 600;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    color: var(--bs-darkblue);
+    border-bottom: 1px solid var(--bs-darkblue);
+}
+
+.search-form {
+    width: 100%;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.search-form-input {
+    width: 20%;
+    display: flex;
+    // border: 4px solid var(--bs-yellow);
+    // border-radius: 8px;
+}
+
+.s-icon {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    padding: 0 12px;
+}
+
+.s-zone {
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+}
+
+.s-title {
+    padding-left: 12px;
+}
+
+.icon-24 {
+    font-size: 24px;
+    padding: 0 12px;
+}
+
+.search-form-btn {
+    background-color: var(--bs-secondary);
+    color: var(--bs-white);
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    font-size: 24px;
+}
+
+.section-tour {
+    width: 100%;
+    padding: 40px 24px;
+}
+
+.tour-title {
+    color: var(--bs-secondary);
+    margin-bottom: 24px;
+}
+
+.tour-list {
+    width: calc(100% - 48px);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tour-item {
+    width: 23%;
+    min-height: 250px;
+}
+
+.item-img {
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+}
+
+.tour-item-info {
+    padding-left: 12px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.section-more {
+    padding: 40px 24px;
+}
+
+.more-list {
+    padding-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.more-item {
+    width: 30%;
+    max-height: 200px;
+    margin-bottom: 48px;
+}
+
+.icon-more {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 56px;
+}
+
+.more-item-title,
+.more-item-content {
+    text-align: center;
+    font-size: 16px;
+}
+
+.more-item-title {
+    font-weight: 600;
+    color: var(--bs-secondary);
+    margin-top: 4px;
+    margin-bottom: 4px;
+}

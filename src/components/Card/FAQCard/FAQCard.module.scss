@@ -1,0 +1,36 @@
+.wrapper {
+    min-width: calc(50% - 12px);
+    min-height: 70px;
+    background-color: #f9f9f9;
+    margin-bottom: 16px;
+    padding: 12px;
+    padding-left: 36px;
+    border-radius: 8px;
+}
+
+.inner {
+    width: 100%;
+    height: 46px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .title {
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    .btn-expand {
+        width: 46px;
+        height: 46px;
+        background-color: transparent;
+    }
+}
+
+.content {
+    text-align: left;
+    padding-top: 12px;
+    padding-right: 36px;
+    font-size: 14px;
+    font-weight: 400;
+}

@@ -1,0 +1,13 @@
+.wrapper {
+    width: 100%;
+    display: block;
+}
+
+.container {
+    display: flex;
+}
+
+.content {
+    width: 80%;
+    height: calc(100vh - 60px);
+}

@@ -1,7 +1,7 @@
 import config from '~/config';
 
 // Layouts
-//import { HeaderOnly } from '~/layouts';
+import { AdminLayout } from '~/layouts';
 
 // Pages
 import Advertise from '~/pages/Advertise';
@@ -17,6 +17,12 @@ import Search from '~/pages/Search';
 import Login from '~/pages/Login';
 import Register from '~/pages/Register';
 import Cart from '~/pages/Cart';
+import Book from '~/pages/Book';
+import Payment from '~/pages/Payment';
+import Confirm from '~/pages/ConfirmBook';
+
+import AdminDashboard from '~/pages/Admin/Dashboard';
+import AdminAccounts from '~/pages/Admin/Accounts';
 
 // Public routes
 const publicRoutes = [
@@ -33,6 +39,12 @@ const publicRoutes = [
     { path: config.routes.login, component: Login },
     { path: config.routes.register, component: Register },
     { path: config.routes.cart, component: Cart },
+    { path: config.routes.book, component: Book },
+    { path: config.routes.payment, component: Payment },
+    { path: config.routes.confirm, component: Confirm },
+    // Admin
+    { path: config.routes.adminDashboard, component: AdminDashboard, layout: AdminLayout },
+    { path: config.routes.adminAccounts, component: AdminAccounts, layout: AdminLayout },
 ];
 
 // Private routes

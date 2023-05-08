@@ -1,3 +1,6 @@
+//@import '../../assets/css/w3.scss';
+@import '~react-image-gallery/styles/scss/image-gallery.scss';
+
 .wrapper {
     width: 100%;
     background-color: #f9f9f9;
@@ -132,6 +135,7 @@
 .section-info {
     display: flex;
     width: 100%;
+    margin-bottom: 40px;
 
     .info-left {
         width: 40%;
@@ -226,5 +230,201 @@
                 font-weight: 400;
             }
         }
+    }
+}
+
+.section-dest {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 40px;
+    background-color: var(--bs-white);
+
+    .dest-list {
+        display: flex;
+        //float: left;
+        align-items: center;
+        max-width: 4000px;
+        padding-top: 40px;
+
+        .dest-item {
+            padding-left: 12px;
+
+            .img-dest {
+                width: 240px;
+                height: 160px;
+                border-radius: 10px;
+            }
+        }
+    }
+}
+
+.section-schedule {
+    text-align: center;
+    padding-top: 60px;
+    background-color: var(--bs-white);
+
+    .schedule-content {
+        margin-top: 60px;
+        border: 1px solid #e7e7e7;
+        display: flex;
+
+        .mst-schdule {
+            width: 33.333%;
+            background-color: #f9f9f9;
+            min-height: 500px;
+            padding: 36px 12px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dtl-schdule {
+            width: 66.667%;
+            background-color: var(--bs-white);
+            min-height: 500px;
+            padding: 38px 42px 38px 28px;
+        }
+    }
+}
+
+.mst-item {
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 32px;
+
+    .date-left {
+        width: 40px;
+        text-align: left;
+    }
+    .date-center {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: #fd5056;
+        border: 1px solid #fd5056;
+        color: #fff;
+    }
+    .date-right {
+        width: calc(100% - 64px);
+        padding-left: 10px;
+        display: flex;
+        flex-direction: column;
+
+        .date {
+            font-weight: 500;
+            font-size: 11px;
+            text-align: left;
+        }
+
+        .location {
+            font-size: 15px;
+            font-weight: 600;
+            text-align: left;
+        }
+    }
+}
+
+.dtl-item {
+    h3 {
+        font-size: 22px;
+        font-weight: 600;
+        text-align: start;
+    }
+    .excerpt {
+        padding-left: 33px;
+        max-width: 100%;
+        position: relative;
+        margin-top: 8px;
+        margin-bottom: 15px;
+        line-height: 24px;
+        font-size: 14px;
+
+        .line {
+            height: calc(100% - 16px);
+            border-left: 0.5px dashed #4d4aef;
+            position: absolute;
+            top: 6px;
+            left: 0;
+            z-index: 1;
+        }
+
+        .line::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            background: #4d4aef;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: -3px;
+            z-index: 1;
+        }
+
+        .line::after {
+            content: '';
+            width: 5px;
+            height: 5px;
+            background: #4d4aef;
+            border-radius: 50%;
+            position: absolute;
+            top: 100%;
+            left: -3px;
+            z-index: 1;
+        }
+    }
+}
+
+.section-include {
+    width: 100%;
+    background-color: var(--bs-white);
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 40px;
+
+    .include-time,
+    .include-guide {
+        width: 50%;
+        border-radius: 10px;
+
+        h2 {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .block {
+            display: flex;
+            margin: 0 12px;
+            padding: 12px;
+            background-color: #f9f9f9;
+        }
+
+        .guide-item {
+            margin: 0 12px;
+            padding: 12px;
+            background-color: #f9f9f9;
+        }
+    }
+}
+
+.section-notice {
+    width: 1360px;
+    background-color: var(--bs-white);
+    padding: 40px 12px;
+    text-align: center;
+
+    .notice-content {
+        width: 100%;
+        margin-top: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
     }
 }
