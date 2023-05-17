@@ -1,79 +1,75 @@
 import classNames from 'classnames/bind';
+import { usePagination, DOTS } from '~/hooks/usePagination';
+
 import styles from './Pagination.module.scss';
-import { useEffect, useState } from 'react';
-import ReactPaginate from 'react-paginate';
 
 const cx = classNames.bind(styles);
 
-function Pagination({ lstitems, itemsPerPage }) {
-    // We start with an empty list of items.
-    const [currentItems, setCurrentItems] = useState(null);
-    const [pageCount, setPageCount] = useState(0);
-    // Here we use item offsets; we could also use page offsets
-    // following the API or data you're working with.
-    const [itemOffset, setItemOffset] = useState(0);
+function Pagination(props) {
+    const { onPageChange, totalCount, siblingCount = 1, currentPage, pageSize } = props;
 
-    useEffect(() => {
-        // Fetch items from another resources.
-        const endOffset = itemOffset + itemsPerPage;
-        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-        setCurrentItems(lstitems.slice(itemOffset, endOffset));
-        setPageCount(Math.ceil(lstitems.length / itemsPerPage));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [itemOffset, itemsPerPage]);
+    const paginationRange = usePagination({
+        currentPage,
+        totalCount,
+        siblingCount,
+        pageSize,
+    });
 
-    // Invoke when user click to request another page.
-    const handlePageClick = (event) => {
-        const newOffset = (event.selected * itemsPerPage) % lstitems.length;
-        console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
-        setItemOffset(newOffset);
-    };
-
-    function Items({ currentItems }) {
-        if (currentItems === null) {
-            return <div>Loading...</div>;
-        }
-        return (
-            <div>
-                {currentItems.map((item, index) => (
-                    <div key={index}>
-                        <span>{index + 1}</span>
-                        <span>{item.UserCode}</span>
-                        <span>{item.UserName}</span>
-                        <span>{item.mctm_CustomerGender}</span>
-                        <span>{item.mctm_CustomerMobileNo}</span>
-                        <span>{item.mctm_CustomerEmail}</span>
-                        <span>{item.FlagSysAdmin}</span>
-                    </div>
-                ))}
-            </div>
-        );
+    // If there are less than 2 times in pagination range we shall not render the component
+    if (currentPage === 0 || paginationRange.length < 2) {
+        return null;
     }
 
+    const onNext = () => {
+        onPageChange(currentPage + 1);
+    };
+
+    const onPrevious = () => {
+        onPageChange(currentPage - 1);
+    };
+
+    let lastPage = paginationRange[paginationRange.length - 1];
+
     return (
-        <>
-            <Items currentItems={currentItems} />
-            <ReactPaginate
-                nextLabel="next >"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={3}
-                marginPagesDisplayed={2}
-                pageCount={pageCount}
-                previousLabel="< previous"
-                pageClassName="page-item"
-                pageLinkClassName="page-link"
-                previousClassName="page-item"
-                previousLinkClassName="page-link"
-                nextClassName="page-item"
-                nextLinkClassName="page-link"
-                breakLabel="..."
-                breakClassName="page-item"
-                breakLinkClassName="page-link"
-                containerClassName="pagination"
-                activeClassName="active"
-                renderOnZeroPageCount={null}
-            />
-        </>
+        <ul className={cx('pagination-container', 'pagination-bar')}>
+            {/* Left navigation arrow */}
+            <li
+                className={cx('pagination-item', {
+                    disabled: currentPage === 1,
+                })}
+                onClick={onPrevious}
+            >
+                <div className={cx('arrow', 'left')} />
+            </li>
+            {paginationRange.map((pageNumber, index) => {
+                // If the pageItem is a DOT, render the DOTS unicode character
+                if (pageNumber === DOTS) {
+                    return <li className={cx('pagination-item', 'dots')}>&#8230;</li>;
+                }
+
+                // Render our Page Pills
+                return (
+                    <li
+                        key={index}
+                        className={cx('pagination-item', {
+                            selected: pageNumber === currentPage,
+                        })}
+                        onClick={() => onPageChange(pageNumber)}
+                    >
+                        {pageNumber}
+                    </li>
+                );
+            })}
+            {/*  Right Navigation arrow */}
+            <li
+                className={cx('pagination-item', {
+                    disabled: currentPage === lastPage,
+                })}
+                onClick={onNext}
+            >
+                <div className={cx('arrow', 'right')} />
+            </li>
+        </ul>
     );
 }
 

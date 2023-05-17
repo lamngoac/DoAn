@@ -92,7 +92,7 @@
     position: relative;
     width: 100%;
     height: 36px;
-    margin-bottom: 16px;
+    //padding-left: 16px;
 
     .input-pick {
         width: 100%;
@@ -100,6 +100,8 @@
         padding-left: 56px;
         color: var(--bs--secondary);
         font-size: 18px;
+        border: 1px solid #d8d8d8;
+        border-radius: 4px;
     }
 }
 
@@ -144,4 +146,9 @@
         border: none;
         cursor: pointer;
     }
+}
+
+.btnActive {
+    background-color: var(--bs-darkblue) !important;
+    color: var(--bs-white) !important;
 }

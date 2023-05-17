@@ -20,6 +20,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FAQCard from '~/components/Card/FAQCard';
 import images from '~/assets/images';
+import { todayDate } from '~/services/initDateService';
 import styles from './index.module.scss';
 
 const cx = classNames.bind(styles);
@@ -132,7 +133,6 @@ function Tour() {
     const {
         TourCode,
         IDNo,
-        //DateStart,
         TouristNumberLeft,
         TourGuide1,
         TourGuide2,
@@ -167,6 +167,17 @@ function Tour() {
                 navigate('/login');
             }, 2000);
         }
+    };
+
+    const handleSearchOther = () => {
+        localStorage.setItem(
+            'searchClause',
+            `Mst_Tour.TourCode = '${TourCode}' and Mst_TourDetail.DateStart > '${todayDate}'`,
+        );
+
+        setTimeout(() => {
+            navigate('/search');
+        }, 1000);
     };
 
     return (
@@ -250,7 +261,7 @@ function Tour() {
                         <div className={cx('info-left-top')}>
                             <div className={cx('info-left-item', 'dflex')}>
                                 <span>Khởi hành 06/05/2023 - Giờ đi: 17:45</span>
-                                <button className={cx('btn-other')}>
+                                <button className={cx('btn-other')} onClick={() => handleSearchOther()}>
                                     <FontAwesomeIcon icon={faCalendarAlt} className={cx('fa-icon')} />
                                     Ngày khác
                                 </button>

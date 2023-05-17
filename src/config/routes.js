@@ -14,9 +14,17 @@ const routes = {
     login: '/login',
     register: '/register',
     cart: '/cart',
+    accinfo: '/accinfo',
+    bh: '/bh',
     notfound: '*',
+    // admin
     adminDashboard: '/admin/dashboard',
     adminAccounts: '/admin/accounts',
+    adminTours: '/admin/tours',
+    adminTourUpdate: '/admin/tour/:slug',
+    adminTourCreate: '/admin/tour/create',
+    adminTourSchedules: '/admin/tourschedules',
+    adminTourScheduleUpdate: '/admin/tourschedule/:slug',
 };
 
 export default routes;

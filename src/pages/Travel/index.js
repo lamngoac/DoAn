@@ -1,14 +1,18 @@
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import styles from './index.module.scss';
 import ASidebar from '~/layouts/components/ASidebar';
 import TourCard from '~/components/Card/TourCard';
+import Pagination from '~/components/Pagination';
 
 const cx = classNames.bind(styles);
 
 function Travel() {
+    const [currentPage, setCurrentPage] = useState(1);
     const [tourList, setTourList] = useState([]);
     const [tourCount, setTourCount] = useState(0);
+
+    let PageSize = 12;
 
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
@@ -42,15 +46,46 @@ function Travel() {
     };
 
     useEffect(() => {
+        //setLoading(true);
         fetch('http://localhost:3000/DAMstTour/WA_Mst_TourDetail_GetForView', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 setTourList(result.Data.Lst_Mst_TourDetail);
                 setTourCount(result.Data.MySummaryTable.MyCount);
+                //setLoading(false);
             })
             .catch((error) => console.log('error', error));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const currentData = useMemo(() => {
+        const firstPageIndex = (currentPage - 1) * PageSize;
+        const lastPageIndex = firstPageIndex + PageSize;
+        return tourList.slice(firstPageIndex, lastPageIndex);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentPage, tourList]);
+
+    const sortOnPrice = (e) => {
+        // when the sort-by-price select box is changed, change tourList items order to its TourPrice value
+        if (e.target.value === 'asc') {
+            setTourList(
+                tourList.sort((a, b) => {
+                    return a.mt_TourPrice - b.mt_TourPrice;
+                }),
+            );
+        } else if (e.target.value === 'desc') {
+            setTourList(
+                tourList.sort((a, b) => {
+                    return b.mt_TourPrice - a.mt_TourPrice;
+                }),
+            );
+        } else {
+            setTourList(tourList);
+        }
+
+        setCurrentPage(1);
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -74,18 +109,32 @@ function Travel() {
                             </div>
                             <div className={cx('nav-item')}>
                                 <span>Sắp sếp theo</span>
-                                <select className={cx('select-box')}>
+                                <select
+                                    className={cx('select-box')}
+                                    onChange={(e) => {
+                                        sortOnPrice(e);
+                                    }}
+                                >
                                     <option value="0">--- CHỌN ---</option>
-                                    <option value="1">GIÁ TĂNG DẦN</option>
-                                    <option value="2">GIÁ GIẢM DẦN</option>
+                                    <option value="asc">GIÁ TĂNG DẦN</option>
+                                    <option value="desc">GIÁ GIẢM DẦN</option>
                                 </select>
                             </div>
                         </div>
                         <div className={cx('content-list')}>
-                            {tourList.map((tour) => (
+                            {currentData.map((tour) => (
                                 <TourCard key={tour.IDNo} data={tour} />
                             ))}
                         </div>
+                        <Pagination
+                            currentPage={currentPage}
+                            totalCount={tourCount}
+                            pageSize={PageSize}
+                            onPageChange={(page) => {
+                                setCurrentPage(page);
+                                window.scrollTo(0, 100);
+                            }}
+                        />
                     </section>
                 </div>
             </div>

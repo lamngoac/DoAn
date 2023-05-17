@@ -9,6 +9,7 @@ import {
     faCircleInfo,
     faFilePen,
     faMailReply,
+    faSliders,
     faToriiGate,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -20,17 +21,27 @@ function AdminSidebar() {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('inner')}>
+                <div className={cx('nav-follow')}>
+                    <FontAwesomeIcon icon={faSliders} />
+                    &nbsp; Danh sách chức năng
+                </div>
                 <div className={cx('nav-item')} onClick={() => navigate('/admin/accounts')}>
                     <div className={cx('nav-icon')}>
                         <FontAwesomeIcon icon={faUser} />
                     </div>
                     <div className={cx('nav-title')}>Quản lý tài khoản</div>
                 </div>
-                <div className={cx('nav-item')} onClick={() => navigate('/admin/accounts')}>
+                <div className={cx('nav-item')} onClick={() => navigate('/admin/tours')}>
                     <div className={cx('nav-icon')}>
                         <FontAwesomeIcon icon={faToriiGate} />
                     </div>
                     <div className={cx('nav-title')}>Quản lý tuyến Tour</div>
+                </div>
+                <div className={cx('nav-item')} onClick={() => navigate('/admin/tourschedules')}>
+                    <div className={cx('nav-icon')}>
+                        <FontAwesomeIcon icon={faToriiGate} />
+                    </div>
+                    <div className={cx('nav-title')}>Quản lý lịch trình Tour</div>
                 </div>
                 <div className={cx('nav-item')} onClick={() => navigate('/admin/accounts')}>
                     <div className={cx('nav-icon')}>

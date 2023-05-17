@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import images from '~/assets/images';
+import { todayDate } from '~/services/initDateService';
 
 const cx = classNames.bind(styles);
 
@@ -312,7 +313,7 @@ function Book() {
                         {Array.from({ length: quantity }, (data, i) => {
                             return (
                                 <div className={cx('info-line')} key={i}>
-                                    <div className={cx('info-item', 'width25')}>
+                                    <div className={cx('info-item', 'width40')}>
                                         <label htmlFor="name">Họ và tên</label>
                                         <input
                                             type="text"
@@ -326,7 +327,7 @@ function Book() {
                                             }}
                                         />
                                     </div>
-                                    <div className={cx('info-item')}>
+                                    <div className={cx('info-item', 'width30')}>
                                         <label htmlFor="gender">Giới tính</label>
                                         <input
                                             type="text"
@@ -339,12 +340,13 @@ function Book() {
                                             }}
                                         />
                                     </div>
-                                    <div className={cx('info-item')}>
+                                    <div className={cx('info-item', 'width30')}>
                                         <label htmlFor="bod">Ngày sinh</label>
                                         <input
                                             type="date"
                                             id="date"
                                             name="date"
+                                            max={todayDate}
                                             onChange={(e) => {
                                                 const newPassengers = [...passengers];
                                                 newPassengers[i].DateOfBirth = e.target.value;

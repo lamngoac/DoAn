@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './AdminHeader.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faGlobe, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
@@ -21,7 +21,8 @@ function AdminHeader() {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('head-title')} onClick={() => handleClickDashboard()}>
-                TRANG QUẢN TRỊ HỆ THỐNG
+                <FontAwesomeIcon icon={faGlobe} />
+                &nbsp; VIETRAVEL
             </div>
             <div className={cx('frame-logout')}>
                 <button className={cx('btn-logout')} onClick={() => handleClickLogout()}>

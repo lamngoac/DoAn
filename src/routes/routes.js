@@ -20,9 +20,16 @@ import Cart from '~/pages/Cart';
 import Book from '~/pages/Book';
 import Payment from '~/pages/Payment';
 import Confirm from '~/pages/ConfirmBook';
+import AccInfo from '~/pages/AccInfo';
+import BookingHistory from '~/pages/BookingHistory';
 
 import AdminDashboard from '~/pages/Admin/Dashboard';
 import AdminAccounts from '~/pages/Admin/Accounts';
+import AdminTours from '~/pages/Admin/Tours';
+import AdminTourCreate from '~/pages/Admin/Tours/Create';
+import AdminTourUpdate from '~/pages/Admin/Tours/Update';
+import AdminTourSchedules from '~/pages/Admin/TourSchedules';
+import AdminTourScheduleUpdate from '~/pages/Admin/TourSchedules/Update';
 
 // Public routes
 const publicRoutes = [
@@ -35,16 +42,23 @@ const publicRoutes = [
     { path: config.routes.contact, component: Contact },
     { path: config.routes.tour, component: Tour },
     { path: config.routes.notfound, component: NotFound, layout: null },
-    { path: config.routes.search, component: Search, layout: null },
+    { path: config.routes.search, component: Search },
     { path: config.routes.login, component: Login },
     { path: config.routes.register, component: Register },
     { path: config.routes.cart, component: Cart },
     { path: config.routes.book, component: Book },
     { path: config.routes.payment, component: Payment },
     { path: config.routes.confirm, component: Confirm },
+    { path: config.routes.accinfo, component: AccInfo },
+    { path: config.routes.bh, component: BookingHistory },
     // Admin
     { path: config.routes.adminDashboard, component: AdminDashboard, layout: AdminLayout },
     { path: config.routes.adminAccounts, component: AdminAccounts, layout: AdminLayout },
+    { path: config.routes.adminTours, component: AdminTours, layout: AdminLayout },
+    { path: config.routes.adminTourCreate, component: AdminTourCreate, layout: AdminLayout },
+    { path: config.routes.adminTourUpdate, component: AdminTourUpdate, layout: AdminLayout },
+    { path: config.routes.adminTourSchedules, component: AdminTourSchedules, layout: AdminLayout },
+    { path: config.routes.adminTourScheduleUpdate, component: AdminTourScheduleUpdate, layout: AdminLayout },
 ];
 
 // Private routes

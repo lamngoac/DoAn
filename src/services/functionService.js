@@ -60,4 +60,25 @@ const formatAccountType = (type) => {
     }
 };
 
-export { connectDate, formatMoney, formatDate, FormatDateTime, validateEmail, formatAccountType };
+const formatToPascalCase = (str) => {
+    return str.replace(/\w+/g, function (w) {
+        return w[0].toUpperCase() + w.slice(1).toLowerCase();
+    });
+};
+
+const addDays = (date, days) => {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+};
+
+export {
+    connectDate,
+    formatMoney,
+    formatDate,
+    FormatDateTime,
+    validateEmail,
+    formatAccountType,
+    formatToPascalCase,
+    addDays,
+};

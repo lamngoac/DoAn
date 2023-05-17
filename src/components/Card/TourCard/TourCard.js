@@ -3,7 +3,7 @@ import styles from './TourCard.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faCirclePlus, faCoins, faTicket } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { formatMoney } from '~/services/functionService';
+import { formatMoney, formatDate } from '~/services/functionService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -88,7 +88,7 @@ function TourCard({ data = {}, ...passProps }) {
                 </div>
                 <div className={cx('content')}>
                     <div className={cx('tour-time')}>
-                        {DateStart} - {mt_TourDayDuration}N{mt_TourNightDuration}Đ - Giờ đi: {GatherTime}
+                        {formatDate(DateStart)} - {mt_TourDayDuration}N{mt_TourNightDuration}Đ - Giờ đi: {GatherTime}
                     </div>
                     <div className={cx('tour-name')}>{mt_TourName}</div>
                     <div className={cx('tour-code')}>

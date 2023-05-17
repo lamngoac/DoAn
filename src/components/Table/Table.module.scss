@@ -21,6 +21,18 @@
     text-align: center;
 }
 
+.align-left {
+    text-align: left;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.align-center {
+    text-align: center;
+}
+
 // .tableHeader:first-child {
 //     border-top-left-radius: 15px;
 // }
@@ -65,4 +77,127 @@
 
 .width30 {
     width: 30%;
+}
+
+// Admin Table
+.fix-width {
+    width: 100px; /* the element needs a fixed width (in px, em, %, etc) */
+    overflow: hidden; /* make sure it hides the content that overflows */
+    white-space: nowrap; /* don't break the line */
+    text-overflow: ellipsis; /* give the beautiful '...' effect */
+}
+
+.tableAdmin {
+    border-collapse: collapse;
+    border: none;
+    width: 100%;
+    position: relative;
+}
+
+.tableAdminRowHeader {
+    background-color: transparent;
+    transition: all 0.25s ease;
+    border-radius: 10px;
+}
+
+.tableAdminHeader {
+    background-color: #6c7293;
+    padding: 10px;
+    font-weight: 500;
+    text-align: left;
+    color: var(--bs-white);
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.tableAdminRowItems {
+    cursor: auto;
+}
+
+.tableAdminRowItems:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.tableAdminCell {
+    padding: 10px;
+    font-size: 14px;
+    color: grey;
+    position: relative;
+    max-width: 240px;
+
+    &.text-overflow {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+// Active - Inactive
+.active-stt,
+.inactive-stt {
+    width: 100%;
+    //background-color: aqua;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+.active-stt {
+    border-color: #00d25b;
+    color: #00d25b;
+    font-family: 700;
+}
+
+.inactive-stt {
+    border-color: #fc424a;
+    color: #fc424a;
+    font-family: 700;
+}
+
+.btn-update-stt {
+    width: 100%;
+    min-height: 28px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0090e7;
+    color: var(--bs-white);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--bs-info);
+    }
+}
+
+.btn-update,
+.btn-delete {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    margin: 0 4px;
+}
+
+.btn-update {
+    background-color: #0090e7;
+    color: var(--bs-white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--bs-info);
+    }
+}
+
+.btn-delete {
+    background-color: #fc424a;
+    color: var(--bs-white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--bs-danger);
+    }
 }

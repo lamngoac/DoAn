@@ -6,12 +6,14 @@
     padding: 0 20px;
     border-top: 1px solid transparent;
     border-bottom: 1px solid var(--bs-gray);
+    background: #191c24;
 }
 
 .head-title {
     min-width: 20%;
     display: flex;
     align-items: center;
+    color: var(--bs-white);
     font-size: 24px;
     font-weight: 700;
     cursor: pointer;
@@ -27,10 +29,10 @@
 .btn-logout {
     width: 100%;
     height: 40px;
-    background-color: var(--bs-white);
-    border: 2px solid var(--bs-darkblue);
+    background-color: #38425e;
+    border: 2px solid #38425e;
     border-radius: 8px;
-    color: var(--bs-darkblue);
+    color: var(--bs-white);
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
