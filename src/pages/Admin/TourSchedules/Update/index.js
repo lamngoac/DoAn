@@ -1,13 +1,25 @@
 import classNames from 'classnames/bind';
 import styles from './index.module.scss';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect, useMemo } from 'react';
 import Loader from '~/components/Loader';
 
 const cx = classNames.bind(styles);
 
+var adminname = '';
+var adminpassword = '';
+
+if (localStorage.getItem('account') && JSON.parse(localStorage.getItem('account')).isAdmin === '1') {
+    adminname = JSON.parse(localStorage.getItem('account')).username;
+    adminpassword = JSON.parse(localStorage.getItem('account')).password;
+} else {
+    adminname = '';
+    adminpassword = '';
+}
+
 function TourscheduleUpdate() {
     const param = useParams();
+    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
     const [tour, setTour] = useState({});
@@ -91,8 +103,83 @@ function TourscheduleUpdate() {
     };
 
     const handleSubmit = () => {
-        console.log(tourScheduleDetails);
-        console.log(tourSchedule);
+        var raw_ts = JSON.stringify({
+            ServiceCode: 'WEBAPP',
+            Tid: '20181020.143018.986818',
+            TokenID: 'TOCKENID.IDOCNET',
+            RefreshToken: '',
+            UtcOffset: '7',
+            GwUserCode: 'idocNet.idn.Skycic.Inventory.Sv',
+            GwPassword: 'idocNet.idn.Skycic.Inventory.Sv',
+            WAUserCode: adminname,
+            WAUserPassword: adminpassword,
+            FlagIsDelete: '0',
+            FlagAppr: '0',
+            FlagIsEndUser: '0',
+            FuncType: null,
+            Ft_RecordStart: '0',
+            Ft_RecordCount: '123456',
+            Ft_WhereClause: '',
+            Ft_Cols_Upd: '',
+            Mst_TourSchedule: {
+                TourCode: tour.TourCode,
+            },
+            Lst_Mst_TourSchedule: tourSchedule,
+        });
+
+        var requestOptions_ts = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw_ts,
+            redirect: 'follow',
+        };
+
+        var raw_tsd = JSON.stringify({
+            ServiceCode: 'WEBAPP',
+            Tid: '20181020.143018.986818',
+            TokenID: 'TOCKENID.IDOCNET',
+            RefreshToken: '',
+            UtcOffset: '7',
+            GwUserCode: 'idocNet.idn.Skycic.Inventory.Sv',
+            GwPassword: 'idocNet.idn.Skycic.Inventory.Sv',
+            WAUserCode: adminname,
+            WAUserPassword: adminpassword,
+            FlagIsDelete: '0',
+            FlagAppr: '0',
+            FlagIsEndUser: '0',
+            FuncType: null,
+            Ft_RecordStart: '0',
+            Ft_RecordCount: '123456',
+            Ft_WhereClause: '',
+            Ft_Cols_Upd: '',
+            Mst_TourScheduleDetail: {
+                TourCode: tour.TourCode,
+            },
+            Lst_Mst_TourScheduleDetail: tourScheduleDetails,
+        });
+
+        var requestOptions_tsd = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw_tsd,
+            redirect: 'follow',
+        };
+
+        fetch('/DAMstTourSchedule/WA_Mst_TourSchedule_Save', requestOptions_ts)
+            .then((response) => response.json())
+            .then((result) => {
+                if (result.Success === true) {
+                    fetch('/DAMstTourScheduleDetail/WA_Mst_TourScheduleDetail_Save', requestOptions_tsd)
+                        .then((response) => response.json())
+                        .then((result) => {
+                            if (result.Success === true) {
+                                navigate('/admin/tourschedules');
+                            }
+                        })
+                        .catch((error) => console.log('error', error));
+                }
+            })
+            .catch((error) => console.log('error', error));
     };
 
     const currentTS = useMemo(() => {

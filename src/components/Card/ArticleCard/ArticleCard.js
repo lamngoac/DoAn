@@ -6,16 +6,7 @@ const cx = classNames.bind(styles);
 
 function ArticleCard({ to, data = {}, onClick, ...passProps }) {
     // Get attributes from data object to display on card
-    const {
-        ArticleNo,
-        ArticleTitle,
-        ArticleDesc,
-        ArticleThemePath,
-        Author,
-        PostDTime,
-        //FlagShow,
-        //FlagActive,
-    } = data;
+    const { ArticleNo, ArticleTitle, ArticleDesc, ArticleThemePath, Author, PostDTime } = data;
 
     return (
         <div className={cx('wrapper')}>

@@ -29,6 +29,54 @@ const formatDate = (date, inputType = 'yyyy-MM-dd', outputType = 'dd/MM/yyyy') =
     return outputType.replace('yyyy', year).replace('MM', month).replace('dd', day);
 };
 
+const formatDateLTS = (data) => {
+    // input: Sat Jun 03 2023 07:00:00 GMT+0700 (Indochina Time)
+    // output: 2023-06-03
+    const [date, month, day, year, hour, gmt, region] = data.split(' ');
+    var newmonth = '';
+    switch (month) {
+        case 'Jan':
+            newmonth = '01';
+            break;
+        case 'Feb':
+            newmonth = '02';
+            break;
+        case 'Mar':
+            newmonth = '03';
+            break;
+        case 'Apr':
+            newmonth = '04';
+            break;
+        case 'May':
+            newmonth = '05';
+            break;
+        case 'Jun':
+            newmonth = '06';
+            break;
+        case 'Jul':
+            newmonth = '07';
+            break;
+        case 'Aug':
+            newmonth = '08';
+            break;
+        case 'Sep':
+            newmonth = '09';
+            break;
+        case 'Oct':
+            newmonth = '10';
+            break;
+        case 'Nov':
+            newmonth = '11';
+            break;
+        case 'Dec':
+            newmonth = '12';
+            break;
+        default:
+            break;
+    }
+    return `${year}-${newmonth}-${day}`;
+};
+
 const validateEmail = (email) => {
     return String(email)
         .toLowerCase()
@@ -72,13 +120,46 @@ const addDays = (date, days) => {
     return result;
 };
 
+const compareDateToNow = (date) => {
+    const now = new Date();
+    const compare = new Date(date);
+    if (now < compare) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
+// calculate needed date follow today date
+const caculateFLDateMonth = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const date = today.getDate();
+
+    const firstDateOfMonth = new Date(year, month - 1, 1);
+    const lastDateOfMonth = new Date(year, month, 0);
+    const firstMomentOfDay = new Date(year, month - 1, date, 0, 0, 0);
+    const lastMomentOfDay = new Date(year, month - 1, date, 23, 59, 59);
+
+    return {
+        firstDateOfMonth: formatDateLTS(firstDateOfMonth + ''),
+        lastDateOfMonth: formatDateLTS(lastDateOfMonth + ''),
+        firstMomentOfDay: formatDateLTS(firstMomentOfDay + ''),
+        lastMomentOfDay: formatDateLTS(lastMomentOfDay + ''),
+    };
+};
+
 export {
     connectDate,
     formatMoney,
     formatDate,
+    formatDateLTS,
     FormatDateTime,
     validateEmail,
     formatAccountType,
     formatToPascalCase,
     addDays,
+    compareDateToNow,
+    caculateFLDateMonth,
 };

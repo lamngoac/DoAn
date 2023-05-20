@@ -1,19 +1,22 @@
 import classNames from 'classnames/bind';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
-import ArticleCard from '~/components/Card/ArticleCard';
+import NewsItem from '~/components/NewsItem';
 
 const cx = classNames.bind(styles);
 
-function Advertise() {
-    const [data, setData] = useState([]);
+function NewsDetail(props) {
+    const [mstdata, setMstdata] = useState([]);
+    const [dtldata, setDtldata] = useState([]);
+
+    const param = useParams();
 
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
     var raw = JSON.stringify({
-        Rt_Cols_Mst_Article: '*',
-        Rt_Cols_Mst_ArticleDetail: '*',
+        Rt_Cols_POW_NewsNews: '*',
         ServiceCode: 'WEBAPP',
         Tid: '20181020.143018.986818',
         TokenID: 'TOCKENID.IDOCNET',
@@ -21,15 +24,15 @@ function Advertise() {
         UtcOffset: '7',
         GwUserCode: 'idocNet.idn.Skycic.Inventory.Sv',
         GwPassword: 'idocNet.idn.Skycic.Inventory.Sv',
-        WAUserCode: 'SYSADMIN',
-        WAUserPassword: '123456',
+        WAUserCode: '',
+        WAUserPassword: '',
         FlagIsDelete: '0',
         FlagAppr: '0',
         FlagIsEndUser: '0',
         FuncType: null,
         Ft_RecordStart: '0',
         Ft_RecordCount: '1000',
-        Ft_WhereClause: "Mst_Article.FlagActive = '1'",
+        Ft_WhereClause: "POW_NewsNews.NewsNo = '" + param.slug + "'",
         Ft_Cols_Upd: '',
     });
 
@@ -41,23 +44,32 @@ function Advertise() {
     };
 
     useEffect(() => {
-        fetch('DAMstArticle/WA_Mst_Article_Get', requestOptions)
+        fetch('/DAPNewsNews/WA_POW_NewsNews_Get', requestOptions)
             .then((response) => response.json())
-            .then((result) => setData(result.Data.Lst_Mst_Article))
+            .then((result) => {
+                setMstdata(result.Data.Lst_POW_NewsNews[0]);
+                setDtldata(result.Data.Lst_POW_NewsDetail);
+            })
             .catch((error) => console.log('error', error));
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const { Title, Content, Author, PostDTime } = mstdata;
 
     return (
         <div className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <div className={cx('title')}>
-                    <h1>Non Nước Việt Nam</h1>
-                    <div className={cx('border-line')}></div>
+                <div className={cx('mst-data')}>
+                    <div className={cx('title')}>{Title}</div>
+                    <div className={cx('desc')}>{Content}</div>
+                    <div className={cx('crdate')}>
+                        {Author} &nbsp; {PostDTime}
+                    </div>
                 </div>
-                <div className={cx('list')}>
-                    {data.map((item) => (
-                        <ArticleCard key={item.ArticleNo} data={item} />
+                <div className={cx('dtl-data')}>
+                    {dtldata.map((item, index) => (
+                        <NewsItem key={index} data={item} />
                     ))}
                 </div>
             </div>
@@ -65,4 +77,4 @@ function Advertise() {
     );
 }
 
-export default Advertise;
+export default NewsDetail;

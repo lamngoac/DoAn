@@ -1,12 +1,13 @@
 import classNames from 'classnames/bind';
-import styles from './Tours.module.scss';
+import styles from './TourDetails.module.scss';
 import { useEffect, useMemo, useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { AdminTourTable } from '~/components/Table';
 import Loader from '~/components/Loader';
+import { AdminTourDetailsTable } from '~/components/Table';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const cx = classNames.bind(styles);
 
@@ -21,18 +22,18 @@ if (localStorage.getItem('account') && JSON.parse(localStorage.getItem('account'
     adminpassword = '';
 }
 
-function Tours() {
+function TourDetails() {
     const navigate = useNavigate();
     const [searchstring, setSearchstring] = useState('');
     const [loading, setLoading] = useState(false);
-    const [tours, setTours] = useState([]);
-    const [toursCount, setToursCount] = useState(0);
+    const [tourdetails, setTourdetails] = useState([]);
+    const [count, setCount] = useState(0);
 
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
     var raw = JSON.stringify({
-        Rt_Cols_Mst_Tour: '*',
+        Rt_Cols_Mst_TourDetail: '*',
         ServiceCode: 'WEBAPP',
         Tid: '20181020.143018.986818',
         TokenID: 'TOCKENID.IDOCNET',
@@ -61,11 +62,11 @@ function Tours() {
 
     useEffect(() => {
         setLoading(true);
-        fetch('/DAMstTour/WA_Mst_Tour_Get', requestOptions)
+        fetch('/DAMstTour/WA_Mst_TourDetail_Get', requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                setTours(result.Data.Lst_Mst_Tour);
-                setToursCount(result.Data.MySummaryTable.MyCount);
+                setTourdetails(result.Data.Lst_Mst_TourDetail);
+                setCount(result.Data.MySummaryTable.MyCount);
                 setLoading(false);
             })
             .catch((error) => console.log('error', error));
@@ -73,10 +74,15 @@ function Tours() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const currentData = useMemo(() => {
+        let tmp = tourdetails;
+        return tmp;
+    }, [tourdetails]);
+
     const hadleClickSearch = () => {
         if (searchstring) {
             var raw = JSON.stringify({
-                Rt_Cols_Mst_Tour: '*',
+                Rt_Cols_Mst_TourDetail: '*',
                 ServiceCode: 'WEBAPP',
                 Tid: '20181020.143018.986818',
                 TokenID: 'TOCKENID.IDOCNET',
@@ -92,7 +98,7 @@ function Tours() {
                 FuncType: null,
                 Ft_RecordStart: '0',
                 Ft_RecordCount: '123456',
-                Ft_WhereClause: `Mst_Tour.TourCode like '%${searchstring}%' or Mst_Tour.TourName like '%${searchstring}%'`,
+                Ft_WhereClause: `Mst_TourDetail.TourCode like '%${searchstring}%' or Mst_TourDetail.IDNo like '%${searchstring}%'`,
                 Ft_Cols_Upd: '',
             });
 
@@ -104,17 +110,17 @@ function Tours() {
             };
 
             setLoading(true);
-            fetch('/DAMstTour/WA_Mst_Tour_Get', requestOptions)
+            fetch('/DAMstTour/WA_Mst_TourDetail_Get', requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
-                    setTours(result.Data.Lst_Mst_Tour);
-                    setToursCount(result.Data.MySummaryTable.MyCount);
+                    setTourdetails(result.Data.Lst_Mst_TourDetail);
+                    setCount(result.Data.MySummaryTable.MyCount);
                     setLoading(false);
                 })
                 .catch((error) => console.log('error', error));
         } else {
-            var raw1 = JSON.stringify({
-                Rt_Cols_Mst_Tour: '*',
+            var raw_org = JSON.stringify({
+                Rt_Cols_Mst_TourDetail: '*',
                 ServiceCode: 'WEBAPP',
                 Tid: '20181020.143018.986818',
                 TokenID: 'TOCKENID.IDOCNET',
@@ -134,19 +140,19 @@ function Tours() {
                 Ft_Cols_Upd: '',
             });
 
-            var requestOptions1 = {
+            var requestOptions_org = {
                 method: 'POST',
                 headers: myHeaders,
-                body: raw1,
+                body: raw_org,
                 redirect: 'follow',
             };
 
             setLoading(true);
-            fetch('/DAMstTour/WA_Mst_Tour_Get', requestOptions1)
+            fetch('/DAMstTour/WA_Mst_TourDetail_Get', requestOptions_org)
                 .then((response) => response.json())
                 .then((result) => {
-                    setTours(result.Data.Lst_Mst_Tour);
-                    setToursCount(result.Data.MySummaryTable.MyCount);
+                    setTourdetails(result.Data.Lst_Mst_TourDetail);
+                    setCount(result.Data.MySummaryTable.MyCount);
                     setLoading(false);
                 })
                 .catch((error) => console.log('error', error));
@@ -154,11 +160,6 @@ function Tours() {
 
         setSearchstring('');
     };
-
-    const currentData = useMemo(() => {
-        let computedData = tours;
-        return computedData;
-    }, [tours]);
 
     if (!localStorage.getItem('account') || JSON.parse(localStorage.getItem('account')).isAdmin !== '1') {
         return <Navigate to="/" />;
@@ -168,22 +169,22 @@ function Tours() {
                 <div className={cx('wrapper')}>
                     <div className={cx('inner')}>
                         <section className={cx('title-sec')}>
-                            <h1>Quản lý tuyến tour</h1>
+                            <h1>Quản lý thông tin chi tiết tour</h1>
                         </section>
                         <section className={cx('function-sec')}>
-                            <button className={cx('btn-add-tour')} onClick={() => navigate('/admin/tour/create')}>
+                            <button className={cx('btn-add-tour')} onClick={() => navigate('/admin/tourdetail/create')}>
                                 <FontAwesomeIcon icon={faCirclePlus} />
                                 &nbsp; Thêm mới tour
                             </button>
                         </section>
                         <section className={cx('search-sec')}>
                             <div className={cx('amount-row')}>
-                                Có tổng: <span className={cx('hl-info')}>{toursCount}</span> bản ghi
+                                Có tổng: <span className={cx('hl-info')}>{count}</span> bản ghi
                             </div>
                             <div className={cx('search-row')}>
                                 <input
                                     type="text"
-                                    placeholder="Tìm kiếm tuyến tour"
+                                    placeholder="Tìm kiếm tour"
                                     onChange={(e) => setSearchstring(e.target.value)}
                                 />
                                 <button type="button" className={cx('btn-search')} onClick={() => hadleClickSearch()}>
@@ -192,9 +193,10 @@ function Tours() {
                             </div>
                         </section>
                         <section className={cx('table-sec')}>
-                            <AdminTourTable data={currentData} rowsPerPage={6} />
+                            <AdminTourDetailsTable data={currentData} rowsPerPage={6} />
                         </section>
                     </div>
+                    <ToastContainer />
                 </div>
             );
         } else {
@@ -203,4 +205,4 @@ function Tours() {
     }
 }
 
-export default Tours;
+export default TourDetails;

@@ -1,0 +1,140 @@
+.wrapper {
+    width: 100%;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    padding: 0 12px;
+}
+
+.divider {
+    min-height: 16px;
+}
+
+.required::after {
+    content: '*';
+    color: red;
+    margin-left: 4px;
+}
+
+.content {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.contact-mail {
+    width: 58%;
+    padding-right: 16px;
+}
+
+.contact-map {
+    width: 40%;
+}
+
+.std-input,
+.cbb-tt {
+    width: 100%;
+    height: 36px;
+    padding: 0 12px;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #d8d8d8;
+    border-radius: 4px;
+    appearance: none;
+    margin-top: 8px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+
+    &:focus {
+        color: var(--bs-secondary);
+        background-color: #fff;
+        border-color: var(--bs-info);
+        outline: 0;
+        box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.25);
+    }
+}
+
+.width10 {
+    width: 10% !important;
+}
+
+.width20 {
+    width: 20% !important;
+}
+
+.width30 {
+    width: 30% !important;
+}
+
+.width40 {
+    width: 40% !important;
+}
+
+.width50 {
+    width: 50% !important;
+}
+
+.width60 {
+    width: 60% !important;
+}
+
+.width70 {
+    width: 70% !important;
+}
+
+.width80 {
+    width: 80% !important;
+}
+
+.width90 {
+    width: 90% !important;
+}
+
+.width100 {
+    width: 100% !important;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fa-icon {
+    font-size: 16px;
+    min-width: 16px;
+    margin-right: 8px;
+}
+
+.submit-area {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-submit {
+    width: 140px;
+    height: 36px;
+    padding: 0 12px;
+    background-color: var(--bs-primary);
+    border: 1px solid var(--bs-primary);
+    border-radius: 4px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        background-color: var(--bs-red);
+        border-color: var(--bs-red);
+    }
+}
+
+.map-frame {
+    margin-top: 20px;
+    width: 100%;
+    min-height: 300px;
+    border: 0;
+}

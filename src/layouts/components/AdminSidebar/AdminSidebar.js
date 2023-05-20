@@ -43,37 +43,37 @@ function AdminSidebar() {
                     </div>
                     <div className={cx('nav-title')}>Quản lý lịch trình Tour</div>
                 </div>
-                <div className={cx('nav-item')} onClick={() => navigate('/admin/accounts')}>
+                <div className={cx('nav-item')} onClick={() => navigate('/admin/tourdetails')}>
                     <div className={cx('nav-icon')}>
                         <FontAwesomeIcon icon={faCircleInfo} />
                     </div>
                     <div className={cx('nav-title')}>Quản lý chi tiết Tour</div>
                 </div>
-                <div className={cx('nav-item')} onClick={() => navigate('/admin/accounts')}>
+                <div className={cx('nav-item')} onClick={() => navigate('/admin/articles')}>
                     <div className={cx('nav-icon')}>
                         <FontAwesomeIcon icon={faChartSimple} />
                     </div>
                     <div className={cx('nav-title')}>Quản lý tin quảng bá</div>
                 </div>
-                <div className={cx('nav-item')} onClick={() => navigate('/admin/accounts')}>
+                <div className={cx('nav-item')} onClick={() => navigate('/admin/news')}>
                     <div className={cx('nav-icon')}>
                         <FontAwesomeIcon icon={faNewspaper} />
                     </div>
                     <div className={cx('nav-title')}>Quản lý tin tức</div>
                 </div>
-                <div className={cx('nav-item')} onClick={() => navigate('/admin/accounts')}>
+                <div className={cx('nav-item')} onClick={() => navigate('/admin/contacts')}>
                     <div className={cx('nav-icon')}>
                         <FontAwesomeIcon icon={faAddressBook} />
                     </div>
                     <div className={cx('nav-title')}>Quản lý liên lạc</div>
                 </div>
-                <div className={cx('nav-item')} onClick={() => navigate('/admin/accounts')}>
+                <div className={cx('nav-item')} onClick={() => navigate('/admin/faqs')}>
                     <div className={cx('nav-icon')}>
                         <FontAwesomeIcon icon={faCircleQuestion} />
                     </div>
                     <div className={cx('nav-title')}>Quản lý FAQ</div>
                 </div>
-                <div className={cx('nav-item')} onClick={() => navigate('/admin/accounts')}>
+                <div className={cx('nav-item')} onClick={() => navigate('/admin/contactemail')}>
                     <div className={cx('nav-icon')}>
                         <FontAwesomeIcon icon={faMailReply} />
                     </div>

@@ -71,7 +71,59 @@ function TourSchedules() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const hadleClickSearch = () => {};
+    const hadleClickSearch = () => {
+        if (searchstring) {
+            var raw_s = JSON.stringify({
+                Rt_Cols_Mst_Tour: '*',
+                ServiceCode: 'WEBAPP',
+                Tid: '20181020.143018.986818',
+                TokenID: 'TOCKENID.IDOCNET',
+                RefreshToken: '',
+                UtcOffset: '7',
+                GwUserCode: 'idocNet.idn.Skycic.Inventory.Sv',
+                GwPassword: 'idocNet.idn.Skycic.Inventory.Sv',
+                WAUserCode: adminname,
+                WAUserPassword: adminpassword,
+                FlagIsDelete: '0',
+                FlagAppr: '0',
+                FlagIsEndUser: '0',
+                FuncType: null,
+                Ft_RecordStart: '0',
+                Ft_RecordCount: '123456',
+                Ft_WhereClause: `Mst_Tour.TourCode like '%${searchstring}%' or Mst_Tour.TourName like '%${searchstring}%'`,
+                Ft_Cols_Upd: '',
+            });
+
+            var requestOptions_s = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw_s,
+                redirect: 'follow',
+            };
+
+            setLoading(true);
+            fetch('/DAMstTour/WA_Mst_Tour_Get', requestOptions_s)
+                .then((response) => response.json())
+                .then((result) => {
+                    setTours(result.Data.Lst_Mst_Tour);
+                    setToursCount(result.Data.MySummaryTable.MyCount);
+                    setLoading(false);
+                })
+                .catch((error) => console.log('error', error));
+        } else {
+            setLoading(true);
+            fetch('/DAMstTour/WA_Mst_Tour_Get', requestOptions)
+                .then((response) => response.json())
+                .then((result) => {
+                    setTours(result.Data.Lst_Mst_Tour);
+                    setToursCount(result.Data.MySummaryTable.MyCount);
+                    setLoading(false);
+                })
+                .catch((error) => console.log('error', error));
+        }
+
+        setSearchstring('');
+    };
 
     const currentData = useMemo(() => {
         let computedData = tours;
@@ -86,7 +138,7 @@ function TourSchedules() {
                 <div className={cx('wrapper')}>
                     <div className={cx('inner')}>
                         <section className={cx('title-sec')}>
-                            <h1>Quản lý tuyến tour</h1>
+                            <h1>Quản lý lịch trình tour</h1>
                         </section>
                         <section className={cx('function-sec')}></section>
                         <section className={cx('search-sec')}>

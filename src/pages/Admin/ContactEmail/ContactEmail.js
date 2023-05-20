@@ -1,12 +1,13 @@
 import classNames from 'classnames/bind';
-import styles from './Tours.module.scss';
+import styles from './ContactEmail.module.scss';
 import { useEffect, useMemo, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { AdminTourTable } from '~/components/Table';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import Loader from '~/components/Loader';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { AdminContactEmailTable } from '~/components/Table';
 
 const cx = classNames.bind(styles);
 
@@ -21,62 +22,68 @@ if (localStorage.getItem('account') && JSON.parse(localStorage.getItem('account'
     adminpassword = '';
 }
 
-function Tours() {
-    const navigate = useNavigate();
-    const [searchstring, setSearchstring] = useState('');
+function ContactEmail() {
     const [loading, setLoading] = useState(false);
-    const [tours, setTours] = useState([]);
-    const [toursCount, setToursCount] = useState(0);
+    const [searchstring, setSearchstring] = useState('');
+    const [count, setCount] = useState(0);
+    const [ctEmails, setCtEmails] = useState([]);
 
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
-    var raw = JSON.stringify({
-        Rt_Cols_Mst_Tour: '*',
-        ServiceCode: 'WEBAPP',
-        Tid: '20181020.143018.986818',
-        TokenID: 'TOCKENID.IDOCNET',
-        RefreshToken: '',
-        UtcOffset: '7',
-        GwUserCode: 'idocNet.idn.Skycic.Inventory.Sv',
-        GwPassword: 'idocNet.idn.Skycic.Inventory.Sv',
-        WAUserCode: adminname,
-        WAUserPassword: adminpassword,
-        FlagIsDelete: '0',
-        FlagAppr: '0',
-        FlagIsEndUser: '0',
-        FuncType: null,
-        Ft_RecordStart: '0',
-        Ft_RecordCount: '123456',
-        Ft_WhereClause: '',
-        Ft_Cols_Upd: '',
-    });
-
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow',
-    };
-
     useEffect(() => {
+        var raw = JSON.stringify({
+            Rt_Cols_POW_ContactEmail: '*',
+            ServiceCode: 'WEBAPP',
+            Tid: '20181020.143018.986818',
+            TokenID: 'TOCKENID.IDOCNET',
+            RefreshToken: '',
+            UtcOffset: '7',
+            GwUserCode: 'idocNet.idn.Skycic.Inventory.Sv',
+            GwPassword: 'idocNet.idn.Skycic.Inventory.Sv',
+            WAUserCode: adminname,
+            WAUserPassword: adminpassword,
+            FlagIsDelete: '0',
+            FlagAppr: '0',
+            FlagIsEndUser: '0',
+            FuncType: null,
+            Ft_RecordStart: '0',
+            Ft_RecordCount: '123456',
+            Ft_WhereClause: '',
+            Ft_Cols_Upd: '',
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow',
+        };
+
         setLoading(true);
-        fetch('/DAMstTour/WA_Mst_Tour_Get', requestOptions)
+        fetch('/DAPContact/WA_POW_ContactEmail_Get', requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                setTours(result.Data.Lst_Mst_Tour);
-                setToursCount(result.Data.MySummaryTable.MyCount);
-                setLoading(false);
+                setCtEmails(result.Data.Lst_POW_ContactEmail);
+                setCount(result.Data.MySummaryTable.MyCount);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 500);
             })
             .catch((error) => console.log('error', error));
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const currentData = useMemo(() => {
+        let computedData = ctEmails;
+
+        return computedData;
+    }, [ctEmails]);
 
     const hadleClickSearch = () => {
         if (searchstring) {
             var raw = JSON.stringify({
-                Rt_Cols_Mst_Tour: '*',
+                Rt_Cols_POW_ContactEmail: '*',
                 ServiceCode: 'WEBAPP',
                 Tid: '20181020.143018.986818',
                 TokenID: 'TOCKENID.IDOCNET',
@@ -92,7 +99,7 @@ function Tours() {
                 FuncType: null,
                 Ft_RecordStart: '0',
                 Ft_RecordCount: '123456',
-                Ft_WhereClause: `Mst_Tour.TourCode like '%${searchstring}%' or Mst_Tour.TourName like '%${searchstring}%'`,
+                Ft_WhereClause: `POW_ContactEmail.InformationType like '%${searchstring}%' or POW_ContactEmail.CEName like '%${searchstring}%' or POW_ContactEmail.CEEmail like '%${searchstring}%' or POW_ContactEmail.CEMobileNo like '%${searchstring}%'`,
                 Ft_Cols_Upd: '',
             });
 
@@ -104,17 +111,19 @@ function Tours() {
             };
 
             setLoading(true);
-            fetch('/DAMstTour/WA_Mst_Tour_Get', requestOptions)
+            fetch('/DAPContact/WA_POW_ContactEmail_Get', requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
-                    setTours(result.Data.Lst_Mst_Tour);
-                    setToursCount(result.Data.MySummaryTable.MyCount);
-                    setLoading(false);
+                    setCtEmails(result.Data.Lst_POW_ContactEmail);
+                    setCount(result.Data.MySummaryTable.MyCount);
+                    setTimeout(() => {
+                        setLoading(false);
+                    }, 100);
                 })
                 .catch((error) => console.log('error', error));
         } else {
             var raw1 = JSON.stringify({
-                Rt_Cols_Mst_Tour: '*',
+                Rt_Cols_POW_ContactEmail: '*',
                 ServiceCode: 'WEBAPP',
                 Tid: '20181020.143018.986818',
                 TokenID: 'TOCKENID.IDOCNET',
@@ -142,12 +151,14 @@ function Tours() {
             };
 
             setLoading(true);
-            fetch('/DAMstTour/WA_Mst_Tour_Get', requestOptions1)
+            fetch('/DAPContact/WA_POW_ContactEmail_Get', requestOptions1)
                 .then((response) => response.json())
                 .then((result) => {
-                    setTours(result.Data.Lst_Mst_Tour);
-                    setToursCount(result.Data.MySummaryTable.MyCount);
-                    setLoading(false);
+                    setCtEmails(result.Data.Lst_POW_ContactEmail);
+                    setCount(result.Data.MySummaryTable.MyCount);
+                    setTimeout(() => {
+                        setLoading(false);
+                    }, 100);
                 })
                 .catch((error) => console.log('error', error));
         }
@@ -155,35 +166,27 @@ function Tours() {
         setSearchstring('');
     };
 
-    const currentData = useMemo(() => {
-        let computedData = tours;
-        return computedData;
-    }, [tours]);
-
     if (!localStorage.getItem('account') || JSON.parse(localStorage.getItem('account')).isAdmin !== '1') {
         return <Navigate to="/" />;
     } else {
-        if (!loading) {
+        if (loading) {
+            return <Loader />;
+        } else {
             return (
                 <div className={cx('wrapper')}>
                     <div className={cx('inner')}>
                         <section className={cx('title-sec')}>
-                            <h1>Quản lý tuyến tour</h1>
+                            <h1>Quản lý Email liên lạc</h1>
                         </section>
-                        <section className={cx('function-sec')}>
-                            <button className={cx('btn-add-tour')} onClick={() => navigate('/admin/tour/create')}>
-                                <FontAwesomeIcon icon={faCirclePlus} />
-                                &nbsp; Thêm mới tour
-                            </button>
-                        </section>
+                        <section className={cx('function-sec')}></section>
                         <section className={cx('search-sec')}>
                             <div className={cx('amount-row')}>
-                                Có tổng: <span className={cx('hl-info')}>{toursCount}</span> bản ghi
+                                Có tổng: <span className={cx('hl-info')}>{count}</span> bản ghi
                             </div>
                             <div className={cx('search-row')}>
                                 <input
                                     type="text"
-                                    placeholder="Tìm kiếm tuyến tour"
+                                    placeholder="Tìm kiếm thông tin"
                                     onChange={(e) => setSearchstring(e.target.value)}
                                 />
                                 <button type="button" className={cx('btn-search')} onClick={() => hadleClickSearch()}>
@@ -192,15 +195,14 @@ function Tours() {
                             </div>
                         </section>
                         <section className={cx('table-sec')}>
-                            <AdminTourTable data={currentData} rowsPerPage={6} />
+                            <AdminContactEmailTable data={currentData} rowsPerPage={6} />
                         </section>
                     </div>
+                    <ToastContainer />
                 </div>
             );
-        } else {
-            return <Loader />;
         }
     }
 }
 
-export default Tours;
+export default ContactEmail;

@@ -9,6 +9,7 @@ import Article from '~/pages/Article';
 import Home from '~/pages/Home';
 import Travel from '~/pages/Travel';
 import News from '~/pages/News';
+import NewsDetail from '~/pages/NewsDetail';
 import About from '~/pages/About';
 import Contact from '~/pages/Contact';
 import Tour from '~/pages/Tour';
@@ -30,6 +31,21 @@ import AdminTourCreate from '~/pages/Admin/Tours/Create';
 import AdminTourUpdate from '~/pages/Admin/Tours/Update';
 import AdminTourSchedules from '~/pages/Admin/TourSchedules';
 import AdminTourScheduleUpdate from '~/pages/Admin/TourSchedules/Update';
+import AdminTourDetails from '~/pages/Admin/TourDetails';
+import AdminTourDetailCreate from '~/pages/Admin/TourDetails/Create';
+import AdminTourDetailUpdate from '~/pages/Admin/TourDetails/Update';
+import AdminArticles from '~/pages/Admin/Article';
+import AdminArticleCreate from '~/pages/Admin/Article/Create';
+import AdminArticleUpdate from '~/pages/Admin/Article/Update';
+import AdminContacts from '~/pages/Admin/Contact';
+import AdminFAQ from '~/pages/Admin/FAQ';
+import AdminFAQCreate from '~/pages/Admin/FAQ/Create';
+import AdminFAQUpdate from '~/pages/Admin/FAQ/Update';
+import AdminContactEmail from '~/pages/Admin/ContactEmail';
+import AdminContactEmailDetail from '~/pages/Admin/ContactEmail/Detail';
+import AdminNews from '~/pages/Admin/News';
+import AdminNewsCreate from '~/pages/Admin/News/Create';
+import AdminNewsUpdate from '~/pages/Admin/News/Update';
 
 // Public routes
 const publicRoutes = [
@@ -38,6 +54,7 @@ const publicRoutes = [
     { path: config.routes.home, component: Home },
     { path: config.routes.travel, component: Travel },
     { path: config.routes.news, component: News },
+    { path: config.routes.newsDetail, component: NewsDetail },
     { path: config.routes.about, component: About },
     { path: config.routes.contact, component: Contact },
     { path: config.routes.tour, component: Tour },
@@ -59,6 +76,21 @@ const publicRoutes = [
     { path: config.routes.adminTourUpdate, component: AdminTourUpdate, layout: AdminLayout },
     { path: config.routes.adminTourSchedules, component: AdminTourSchedules, layout: AdminLayout },
     { path: config.routes.adminTourScheduleUpdate, component: AdminTourScheduleUpdate, layout: AdminLayout },
+    { path: config.routes.adminTourDetails, component: AdminTourDetails, layout: AdminLayout },
+    { path: config.routes.adminTourDetailCreate, component: AdminTourDetailCreate, layout: AdminLayout },
+    { path: config.routes.adminTourDetailUpdate, component: AdminTourDetailUpdate, layout: AdminLayout },
+    { path: config.routes.adminArticles, component: AdminArticles, layout: AdminLayout },
+    { path: config.routes.adminArticleCreate, component: AdminArticleCreate, layout: AdminLayout },
+    { path: config.routes.adminArticleUpdate, component: AdminArticleUpdate, layout: AdminLayout },
+    { path: config.routes.adminContacts, component: AdminContacts, layout: AdminLayout },
+    { path: config.routes.adminFAQ, component: AdminFAQ, layout: AdminLayout },
+    { path: config.routes.adminFAQCreate, component: AdminFAQCreate, layout: AdminLayout },
+    { path: config.routes.adminFAQUpdate, component: AdminFAQUpdate, layout: AdminLayout },
+    { path: config.routes.adminContactEmail, component: AdminContactEmail, layout: AdminLayout },
+    { path: config.routes.adminContactEmailDetail, component: AdminContactEmailDetail, layout: AdminLayout },
+    { path: config.routes.adminNews, component: AdminNews, layout: AdminLayout },
+    { path: config.routes.adminNewsCreate, component: AdminNewsCreate, layout: AdminLayout },
+    { path: config.routes.adminNewsUpdate, component: AdminNewsUpdate, layout: AdminLayout },
 ];
 
 // Private routes

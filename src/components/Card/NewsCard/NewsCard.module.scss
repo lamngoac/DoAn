@@ -1,0 +1,45 @@
+.wrapper {
+    width: 900px;
+    height: 160px;
+    padding-top: 10px;
+    border-bottom: 1px dotted #ccc;
+}
+
+.inner {
+    display: flex;
+    justify-content: flex-start;
+    flex: 1;
+}
+
+.img {
+    padding: 0;
+    width: 210px;
+    margin-right: 16px;
+}
+
+.img-frame {
+    max-width: 190px;
+    height: auto;
+    max-height: 130px;
+}
+
+.content {
+    display: block;
+
+    .title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .desc {
+        height: 72px;
+        font-size: 13px;
+        color: #000;
+        margin-bottom: 10px;
+    }
+
+    .crdate {
+        font-size: 12px;
+    }
+}

@@ -4,4 +4,9 @@ export {
     BookingDashboardTable,
     AdminTourTable,
     AdminTourScheduleTable,
+    AdminTourDetailsTable,
+    AdminArticleTable,
+    AdminFAQTable,
+    AdminContactEmailTable,
+    AdminNewsTable,
 } from './Table';
