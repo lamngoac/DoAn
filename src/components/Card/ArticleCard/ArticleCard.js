@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import styles from './ArticleCard.module.scss';
+import { formatDate } from '~/services/functionService';
 
 const cx = classNames.bind(styles);
 
@@ -20,7 +21,7 @@ function ArticleCard({ to, data = {}, onClick, ...passProps }) {
                     </Link>
                     <div className={cx('desc')}>{ArticleDesc}</div>
                     <div className={cx('crdate')}>
-                        {Author} &nbsp; {PostDTime}
+                        {Author} &nbsp; {formatDate(PostDTime + '')}
                     </div>
                 </div>
             </div>

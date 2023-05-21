@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import images from '~/assets/images';
 import { todayDate } from '~/services/initDateService';
+import { Gender } from '~/services/variableService';
 
 const cx = classNames.bind(styles);
 
@@ -328,17 +329,23 @@ function Book() {
                                         />
                                     </div>
                                     <div className={cx('info-item', 'width30')}>
-                                        <label htmlFor="gender">Giới tính</label>
-                                        <input
-                                            type="text"
-                                            id="gender"
-                                            name="gender"
+                                        <div htmlFor="gender">Giới tính</div>
+                                        <select
                                             onChange={(e) => {
                                                 const newPassengers = [...passengers];
                                                 newPassengers[i].Gender = e.target.value;
                                                 setPassengers(newPassengers);
                                             }}
-                                        />
+                                        >
+                                            <option value={0}>-- Chọn --</option>;
+                                            {Gender.map((data, i) => {
+                                                return (
+                                                    <option value={data.Gender} key={i}>
+                                                        {data.Gender}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
                                     </div>
                                     <div className={cx('info-item', 'width30')}>
                                         <label htmlFor="bod">Ngày sinh</label>

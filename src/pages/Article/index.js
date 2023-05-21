@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import MiniItem from '~/components/MiniItem';
+import { formatDate } from '~/services/functionService';
 
 const cx = classNames.bind(styles);
 
@@ -65,7 +66,7 @@ function Article(props) {
                     <div className={cx('title')}>{ArticleTitle}</div>
                     <div className={cx('desc')}>{ArticleDesc}</div>
                     <div className={cx('crdate')}>
-                        {Author} &nbsp; {PostDTime}
+                        {Author} &nbsp; {formatDate(PostDTime + '')}
                     </div>
                 </div>
                 <div className={cx('dtl-data')}>

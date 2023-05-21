@@ -1,25 +1,32 @@
 import classNames from 'classnames/bind';
 import HomeTheme from '~/components/HomeTheme';
-import Searchcbb from '~/components/Searchcbb/Searchcbb';
+//import Searchcbb from '~/components/Searchcbb/Searchcbb';
 import styles from './index.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faArrowsLeftRight,
+    faArrowRight,
+    //faArrowsLeftRight,
     faBoxesStacked,
     faCreditCard,
     faHandHoldingDollar,
     faLaptopFile,
-    faLocationDot,
+    //faLocationDot,
     faMagnifyingGlass,
     faPhoneVolume,
     faPlaneDeparture,
 } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function Home() {
+    const navigate = useNavigate();
     const [provinces, setProvinces] = useState([]);
+
+    const handleClickSearch = () => {
+        navigate('/travel');
+    };
 
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
@@ -66,7 +73,16 @@ function Home() {
                     <div className={cx('search-line')}>
                         <div className={cx('search-title')}>Tìm kiếm tour du lịch</div>
                         <div className={cx('search-form')}>
-                            <div className={cx('search-form-input')}>
+                            <div className={cx('form-left')}>Bạn muốn tìm kiếm tour du lịch tuyệt vời nhất ?</div>
+                            <FontAwesomeIcon style={{ fontSize: '20px' }} icon={faArrowRight} />
+                            <div className={cx('form-right')}>
+                                <div>Nhấn vào đây để tìm ngay!</div>
+                                <button className={cx('btn-search')} onClick={() => handleClickSearch()}>
+                                    <FontAwesomeIcon style={{ marginRight: '16px' }} icon={faMagnifyingGlass} />
+                                    Tìm kiếm
+                                </button>
+                            </div>
+                            {/* <div className={cx('search-form-input')}>
                                 <div className={cx('s-icon')}>
                                     <FontAwesomeIcon icon={faLocationDot} />
                                 </div>
@@ -89,7 +105,7 @@ function Home() {
                             </div>
                             <button className={cx('search-form-btn')}>
                                 <FontAwesomeIcon icon={faMagnifyingGlass} />
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                 </section>

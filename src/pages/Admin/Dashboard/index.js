@@ -108,6 +108,7 @@ function Dashboard() {
                 }
             })
             .catch((error) => console.log('error', error));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const currentData = useMemo(() => {
@@ -145,7 +146,7 @@ function Dashboard() {
                                 </div>
                                 <div className={cx('income-title')}>Doanh thu tháng này</div>
                             </div>
-                            <div className={cx('income')}>
+                            {/* <div className={cx('income')}>
                                 <div className={cx('income-content')}>
                                     <div className={cx('income-value')}>- 15,150,000 đ</div>
                                     <div className={cx('income-icon', 'ii-down')}>
@@ -153,7 +154,7 @@ function Dashboard() {
                                     </div>
                                 </div>
                                 <div className={cx('income-title')}>Doanh thu so với tháng trước</div>
-                            </div>
+                            </div> */}
                         </section>
                         <section className={cx('booking-sec')}>
                             <div className={cx('booking-title')}>Thông tin đặt tour mới nhất</div>

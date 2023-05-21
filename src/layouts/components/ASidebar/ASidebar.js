@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './ASidebar.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
@@ -10,6 +10,46 @@ const cx = classNames.bind(styles);
 
 function ASidebar() {
     const navigate = useNavigate();
+
+    const [listProvinceLong, setListProvinceLong] = useState([]);
+
+    useEffect(() => {
+        var myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+
+        var raw = JSON.stringify({
+            Rt_Cols_Mst_Province: '*',
+            ServiceCode: 'WEBAPP',
+            Tid: '20181020.143018.986818',
+            TokenID: 'TOCKENID.IDOCNET',
+            RefreshToken: '',
+            UtcOffset: '7',
+            GwUserCode: 'idocNet.idn.Skycic.Inventory.Sv',
+            GwPassword: 'idocNet.idn.Skycic.Inventory.Sv',
+            FlagIsDelete: '0',
+            FlagAppr: '0',
+            FlagIsEndUser: '0',
+            FuncType: null,
+            Ft_RecordStart: '0',
+            Ft_RecordCount: '1000',
+            Ft_WhereClause: "Mst_Province.FlagActive = '1'",
+            Ft_Cols_Upd: '',
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow',
+        };
+
+        fetch('/DAMstProvince/WA_Mst_Province_Get', requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                setListProvinceLong(result.Data.Lst_Mst_Province);
+            })
+            .catch((error) => console.log('error', error));
+    }, []);
 
     const [strTouristCount, setStrTouristCount] = useState('');
     const [sttBtnTouristCount1, setSttBtnTouristCount1] = useState(false);
@@ -30,9 +70,11 @@ function ASidebar() {
     const [sttBtnTourDuration4, setSttBtnTourDuration4] = useState(false);
 
     var strStartPoint = '';
+    var strEndPoint = '';
     var strDate = '';
 
-    const [startPoint, setStartPoint] = useState(0);
+    const [startPoint, setStartPoint] = useState('');
+    const [endPoint, setEndPoint] = useState('');
     const [priceFrom, setPriceFrom] = useState(0);
     const [priceTo, setPriceTo] = useState(100000000);
     const [date, setDate] = useState('');
@@ -89,7 +131,11 @@ function ASidebar() {
         }
 
         if (startPoint) {
-            strStartPoint = ` and Mst_Tour.TourStartPoint like '${startPoint}'`;
+            strStartPoint = ` and Mst_Tour.TourStartPoint like '%${startPoint}%'`;
+        }
+
+        if (endPoint) {
+            strEndPoint = ` and Mst_Tour.TourListDest like '%${endPoint}%'`;
         }
 
         if (date) {
@@ -101,9 +147,9 @@ function ASidebar() {
                 'searchClause',
                 `Mst_Tour.TourPrice >= ${priceFrom} and Mst_Tour.TourPrice <= ${priceTo}${date ? strDate : ''}${
                     startPoint ? strStartPoint : ''
-                }${strTouristCount ? strTouristCount : ''}${strTourType ? strTourType : ''}${
-                    strTourDuration ? strTourDuration : ''
-                }`,
+                }${endPoint ? strEndPoint : ''}${strTouristCount ? strTouristCount : ''}${
+                    strTourType ? strTourType : ''
+                }${strTourDuration ? strTourDuration : ''}`,
             );
 
             // if location now = '/search' reload pages or move to '/search'
@@ -130,14 +176,31 @@ function ASidebar() {
                             onChange={(e) => setStartPoint(e.target.value)}
                         >
                             <option value="">--- Tất cả ---</option>
-                            <option value="%TP. Hồ Chí Minh%">TP. Hồ Chí Minh</option>
-                            <option value="%Hà Nội%">Hà Nội</option>
+                            {listProvinceLong.map((item, index) => {
+                                return (
+                                    <option key={index} value={item.ProvinceName}>
+                                        {item.ProvinceName}
+                                    </option>
+                                );
+                            })}
                         </select>
                     </div>
                     <div className={cx('sidebar__body__item')}>
                         <h5>ĐIỂM ĐẾN</h5>
-                        <select className={cx('select-box')} id="sllDiemDen" name="sllDiemDen">
-                            <option value="0">--- Chọn điểm đến ---</option>
+                        <select
+                            className={cx('select-box')}
+                            id="sllDiemDen"
+                            name="sllDiemDen"
+                            onChange={(e) => setEndPoint(e.target.value)}
+                        >
+                            <option value="">--- Tất cả ---</option>
+                            {listProvinceLong.map((item, index) => {
+                                return (
+                                    <option key={index} value={item.ProvinceName}>
+                                        {item.ProvinceName}
+                                    </option>
+                                );
+                            })}
                         </select>
                     </div>
                     <div className={cx('sidebar__body__item', 'dflex')}>

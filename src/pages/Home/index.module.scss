@@ -30,6 +30,28 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+
+    .form-left,
+    .form-right {
+        width: 40%;
+    }
+}
+
+.form-left,
+.form-right {
+    align-items: center;
+    text-align: center;
+}
+
+.btn-search {
+    min-width: 120px;
+    height: 50px;
+    border-radius: 8px;
+    background-color: var(--bs-secondary);
+    color: var(--bs-white);
+    font-size: 18px;
+    font-weight: 600;
+    padding: 0 12px;
 }
 
 .search-form-input {

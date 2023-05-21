@@ -9,4 +9,7 @@ export {
     AdminFAQTable,
     AdminContactEmailTable,
     AdminNewsTable,
+    AdminReportRevenueTable,
+    AdminReportTouristTable,
+    AdminTourGuideTable,
 } from './Table';

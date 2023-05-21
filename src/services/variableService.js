@@ -51,4 +51,13 @@ const InfoType = [
     },
 ];
 
-export { TourType, FlagActive, FlagShow, InfoType };
+const Gender = [
+    {
+        Gender: 'Nam',
+    },
+    {
+        Gender: 'Nữ',
+    },
+];
+
+export { TourType, FlagActive, FlagShow, InfoType, Gender };

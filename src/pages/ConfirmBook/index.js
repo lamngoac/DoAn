@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { FormatDateTime, formatDate, formatMoney } from '~/services/functionService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
+import { jsPDF } from 'jspdf';
 
 const cx = classNames.bind(styles);
 
@@ -19,6 +20,12 @@ function Confirm() {
 
     const { BookNo, TotalPrice, CreateDTime, RepName, RepEmail, RepMobile } = bookedTour;
     const { mt_TourName, DateStart, DateEnd } = tour;
+
+    const createPDF = async () => {
+        const pdf = new jsPDF('landscape', 'px', 'a4');
+        const data = await document.getElementById('pdf');
+        pdf.html(data).then(() => pdf.save('confirm.pdf'));
+    };
 
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
@@ -105,7 +112,8 @@ function Confirm() {
     if (isLoaded) {
         return (
             <div className={cx('wrapper')}>
-                <div className={cx('inner')}>
+                {/* <button onClick={() => createPDF()}>Download</button> */}
+                <div className={cx('inner')} id="pdf">
                     <div className={cx('title')}>Xác nhận đặt tour</div>
                     <div className={cx('status')}>
                         <span>Trạng thái: </span>

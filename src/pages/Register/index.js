@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { validateEmail } from '../../services/functionService';
+import { Gender } from '~/services/variableService';
 
 const cx = classNames.bind(styles);
 
@@ -187,7 +188,16 @@ function Register() {
                     </div>
                     <div className={cx('form-item', 'width50')}>
                         <div className={cx('label')}>Giới tính</div>
-                        <input type="text" onChange={(e) => setGender(e.target.value)} id="gender" />
+                        <select type="text" onChange={(e) => setGender(e.target.value)} id="gender">
+                            <option value="">-- Chọn giới tính --</option>
+                            {Gender.map((item, index) => {
+                                return (
+                                    <option key={index} value={item.Gender}>
+                                        {item.Gender}
+                                    </option>
+                                );
+                            })}
+                        </select>
                     </div>
                     <div className={cx('form-item', 'width50')}>
                         <div className={cx('label')}>Số CCCD</div>

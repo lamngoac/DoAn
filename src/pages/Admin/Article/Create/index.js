@@ -357,7 +357,7 @@ function ArticleCreate() {
                         </section>
                         <div className={cx('submit')}>
                             <button className={cx('btn-add')} onClick={() => handleSubmit()}>
-                                Tạo mới tour
+                                Tạo mới HDV
                             </button>
                         </div>
                     </div>

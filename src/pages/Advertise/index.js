@@ -1,12 +1,17 @@
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import styles from './index.module.scss';
 import ArticleCard from '~/components/Card/ArticleCard';
+import Pagination from '~/components/Pagination';
 
 const cx = classNames.bind(styles);
 
 function Advertise() {
     const [data, setData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [count, setCount] = useState(0);
+
+    let PageSize = 10;
 
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
@@ -43,10 +48,21 @@ function Advertise() {
     useEffect(() => {
         fetch('DAMstArticle/WA_Mst_Article_Get', requestOptions)
             .then((response) => response.json())
-            .then((result) => setData(result.Data.Lst_Mst_Article))
+            .then((result) => {
+                setData(result.Data.Lst_Mst_Article);
+                setCount(result.Data.MySummaryTable.MyCount);
+            })
             .catch((error) => console.log('error', error));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const currentData = useMemo(() => {
+        const firstPageIndex = (currentPage - 1) * PageSize;
+        const lastPageIndex = firstPageIndex + PageSize;
+        return data.slice(firstPageIndex, lastPageIndex);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentPage, data]);
 
     return (
         <div className={cx('wrapper')}>
@@ -56,10 +72,19 @@ function Advertise() {
                     <div className={cx('border-line')}></div>
                 </div>
                 <div className={cx('list')}>
-                    {data.map((item) => (
+                    {currentData.map((item) => (
                         <ArticleCard key={item.ArticleNo} data={item} />
                     ))}
                 </div>
+                <Pagination
+                    currentPage={currentPage}
+                    totalCount={count}
+                    pageSize={PageSize}
+                    onPageChange={(page) => {
+                        setCurrentPage(page);
+                        window.scrollTo(0, 100);
+                    }}
+                />
             </div>
         </div>
     );

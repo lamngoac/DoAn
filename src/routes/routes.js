@@ -46,6 +46,11 @@ import AdminContactEmailDetail from '~/pages/Admin/ContactEmail/Detail';
 import AdminNews from '~/pages/Admin/News';
 import AdminNewsCreate from '~/pages/Admin/News/Create';
 import AdminNewsUpdate from '~/pages/Admin/News/Update';
+import AdminRptRevenue from '~/pages/Admin/RptRevenue';
+import AdminRptTourist from '~/pages/Admin/RptTourist';
+import AdminTourGuide from '~/pages/Admin/TourGuide';
+import AdminTourGuideCreate from '~/pages/Admin/TourGuide/Create';
+import AdminTourGuideUpdate from '~/pages/Admin/TourGuide/Update';
 
 // Public routes
 const publicRoutes = [
@@ -91,6 +96,11 @@ const publicRoutes = [
     { path: config.routes.adminNews, component: AdminNews, layout: AdminLayout },
     { path: config.routes.adminNewsCreate, component: AdminNewsCreate, layout: AdminLayout },
     { path: config.routes.adminNewsUpdate, component: AdminNewsUpdate, layout: AdminLayout },
+    { path: config.routes.adminRptRevenue, component: AdminRptRevenue, layout: AdminLayout },
+    { path: config.routes.adminRptTourist, component: AdminRptTourist, layout: AdminLayout },
+    { path: config.routes.adminTourGuides, component: AdminTourGuide, layout: AdminLayout },
+    { path: config.routes.adminTourGuideCreate, component: AdminTourGuideCreate, layout: AdminLayout },
+    { path: config.routes.adminTourGuideUpdate, component: AdminTourGuideUpdate, layout: AdminLayout },
 ];
 
 // Private routes

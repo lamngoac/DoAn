@@ -41,6 +41,11 @@ const routes = {
     adminNews: '/admin/news',
     adminNewsCreate: '/admin/news/create',
     adminNewsUpdate: '/admin/news/:slug',
+    adminRptRevenue: '/admin/rptrevenue',
+    adminRptTourist: '/admin/rpttourist',
+    adminTourGuides: '/admin/tourguides',
+    adminTourGuideCreate: '/admin/tourguide/create',
+    adminTourGuideUpdate: '/admin/tourguide/:slug',
 };
 
 export default routes;

@@ -49,7 +49,7 @@ function News() {
                 setData(result.Data.Lst_POW_NewsNews);
                 setTimeout(() => {
                     setLoading(false);
-                }, 5000);
+                }, 500);
             })
             .catch((error) => console.log('error', error));
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -30,9 +30,12 @@ function Tour() {
     const navigate = useNavigate();
 
     const [imgsLoaded, setImgsLoaded] = useState(false);
+    const [tgloading, setTgLoading] = useState(true);
+
+    const [tourGuide1, setTourGuide1] = useState('');
+    const [tourGuide2, setTourGuide2] = useState('');
 
     const [tourDtl, setTourDtl] = useState([]);
-    const [tourDtlDate, setTourDtlDate] = useState([]);
     const [tourSchedule, setTourSchedule] = useState([]);
     const [tourScheduleDtl, setTourScheduleDtl] = useState([]);
     const [tourDestImg, setTourDestImg] = useState([]);
@@ -114,11 +117,56 @@ function Tour() {
             .then((response) => response.json())
             .then((result) => {
                 setTourDtl(result.Data.Lst_Mst_TourDetail[0]);
-                setTourDtlDate(result.Data.Lst_Mst_TourDetailDate);
                 setTourSchedule(result.Data.Lst_Mst_TourSchedule);
                 setTourScheduleDtl(result.Data.Lst_Mst_TourScheduleDetail);
                 setTourDestImg(result.Data.Lst_Mst_TourDestImages);
                 setImgsLoaded(true);
+
+                // Get tour guide info
+                var myHeaders = new Headers();
+                myHeaders.append('Content-Type', 'application/json');
+
+                var raw_tg = JSON.stringify({
+                    Rt_Cols_Mst_TourGuide: '*',
+                    ServiceCode: 'WEBAPP',
+                    Tid: '20181020.143018.986818',
+                    TokenID: 'TOCKENID.IDOCNET',
+                    RefreshToken: '',
+                    UtcOffset: '7',
+                    GwUserCode: 'idocNet.idn.Skycic.Inventory.Sv',
+                    GwPassword: 'idocNet.idn.Skycic.Inventory.Sv',
+                    WAUserCode: 'SYSADMIN',
+                    WAUserPassword: '123456',
+                    FlagIsDelete: '0',
+                    FlagAppr: '0',
+                    FlagIsEndUser: '0',
+                    FuncType: null,
+                    Ft_RecordStart: '0',
+                    Ft_RecordCount: '1000',
+                    Ft_WhereClause:
+                        "Mst_TourGuide.TGCode = '" +
+                        result.Data.Lst_Mst_TourDetail[0].TourGuide1 +
+                        "' or Mst_TourGuide.TGCode = '" +
+                        result.Data.Lst_Mst_TourDetail[0].TourGuide2 +
+                        "'",
+                    Ft_Cols_Upd: '',
+                });
+
+                var requestOptions_tg = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: raw_tg,
+                    redirect: 'follow',
+                };
+
+                fetch('/DAMstTourGuide/WA_Mst_TourGuide_Get', requestOptions_tg)
+                    .then((response) => response.json())
+                    .then((result) => {
+                        setTourGuide1(result.Data.Lst_Mst_TourGuide[0]);
+                        setTourGuide2(result.Data.Lst_Mst_TourGuide[1]);
+                        setTgLoading(false);
+                    })
+                    .catch((error) => console.log('error', error));
             })
             .catch((error) => console.log('error', error));
 
@@ -136,6 +184,7 @@ function Tour() {
         TouristNumberLeft,
         TourGuide1,
         TourGuide2,
+        DateStart,
         GatherDate,
         GatherTime,
         GatherAddress,
@@ -260,18 +309,18 @@ function Tour() {
                     <div className={cx('info-left')}>
                         <div className={cx('info-left-top')}>
                             <div className={cx('info-left-item', 'dflex')}>
-                                <span>Khởi hành 06/05/2023 - Giờ đi: 17:45</span>
+                                <span>Khởi hành: {formatDate(DateStart + '')}</span>
                                 <button className={cx('btn-other')} onClick={() => handleSearchOther()}>
                                     <FontAwesomeIcon icon={faCalendarAlt} className={cx('fa-icon')} />
                                     Ngày khác
                                 </button>
                             </div>
                             <div className={cx('info-item')}>
-                                Tập trung {GatherTime} ngày {GatherDate}
+                                Tập trung: {GatherTime} - {formatDate(GatherDate + '')}
                             </div>
-                            <div className={cx('info-item')}>Thời gian {mt_TourDayDuration} ngày</div>
-                            <div className={cx('info-item')}>Nơi khởi hành {mt_TourStartPoint}</div>
-                            <div className={cx('info-item')}>Số chỗ còn nhận {TouristNumberLeft}</div>
+                            <div className={cx('info-item')}>Thời gian: {mt_TourDayDuration} ngày</div>
+                            <div className={cx('info-item')}>Nơi khởi hành: {mt_TourStartPoint}</div>
+                            <div className={cx('info-item')}>Số chỗ còn nhận: {TouristNumberLeft}</div>
                         </div>
                         <div className={cx('info-left-bottom')}>
                             <div className={cx('info-left-bottom-title')}>Quý khách cần hỗ trợ?</div>
@@ -370,7 +419,8 @@ function Tour() {
                                     <span className={cx('date-left')}>Ngày </span>
                                     <span className={cx('date-center')}>{item.Idx}</span>
                                     <span className={cx('date-right')}>
-                                        <span className={cx('date')}>{formatDate(tourDtlDate[index].ExactDate)}</span>
+                                        {/* <span className={cx('date')}>{formatDate(tourDtlDate[index].ExactDate)}</span> */}
+                                        <span className={cx('date')}>Thông tin ngày {item.Idx}</span>
                                         <span className={cx('location')}>{item.Title}</span>
                                     </span>
                                 </div>
@@ -405,21 +455,25 @@ function Tour() {
                     </div>
                     <div className={cx('include-guide')}>
                         <h2>Thông tin hướng dẫn viên</h2>
-                        <div className={cx('guide-item')} style={{ display: 'block' }}>
-                            <div style={{ display: 'block' }}>
-                                <div>HDV dẫn đoàn</div>
-                                <div>PHẠM LÊ HUỲNH ĐỨC 1 {TourGuide1}</div>
-                                <div>190 Pasteur, Vo Thi Sau Ward, District 3, HCM City, Viet Nam</div>
-                                <div>0394422799</div>
+                        {tgloading ? (
+                            <div>Đang tải ...</div>
+                        ) : (
+                            <div className={cx('guide-item')} style={{ display: 'block' }}>
+                                <div style={{ display: 'block' }}>
+                                    <div>HDV dẫn đoàn</div>
+                                    <div>{tourGuide1.TGName}</div>
+                                    <div>{tourGuide1.TGAgentAddress}</div>
+                                    <div>{tourGuide1.TGMobileNo}</div>
+                                </div>
+                                <div style={{ height: '40px' }}></div>
+                                <div style={{ display: 'block' }}>
+                                    <div>HDV dẫn đoàn</div>
+                                    <div>{tourGuide2.TGName}</div>
+                                    <div>{tourGuide2.TGAgentAddress}</div>
+                                    <div>{tourGuide2.TGMobileNo}</div>
+                                </div>
                             </div>
-                            <div style={{ height: '40px' }}></div>
-                            <div style={{ display: 'block' }}>
-                                <div>HDV dẫn đoàn</div>
-                                <div>PHẠM LÊ HUỲNH ĐỨC 2 {TourGuide2}</div>
-                                <div>190 Pasteur, Vo Thi Sau Ward, District 3, HCM City, Viet Nam</div>
-                                <div>0394422799</div>
-                            </div>
-                        </div>
+                        )}
                     </div>
                 </section>
                 <section className={cx('section-notice')}>

@@ -11,6 +11,7 @@ import {
     faMailReply,
     faSliders,
     faToriiGate,
+    faUserAstronaut,
 } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
@@ -55,6 +56,12 @@ function AdminSidebar() {
                     </div>
                     <div className={cx('nav-title')}>Quản lý tin quảng bá</div>
                 </div>
+                <div className={cx('nav-item')} onClick={() => navigate('/admin/tourguides')}>
+                    <div className={cx('nav-icon')}>
+                        <FontAwesomeIcon icon={faUserAstronaut} />
+                    </div>
+                    <div className={cx('nav-title')}>Quản lý HDV</div>
+                </div>
                 <div className={cx('nav-item')} onClick={() => navigate('/admin/news')}>
                     <div className={cx('nav-icon')}>
                         <FontAwesomeIcon icon={faNewspaper} />
@@ -79,13 +86,13 @@ function AdminSidebar() {
                     </div>
                     <div className={cx('nav-title')}>Quản lý tin Email</div>
                 </div>
-                <div className={cx('nav-item')} onClick={() => navigate('/admin/accounts')}>
+                <div className={cx('nav-item')} onClick={() => navigate('/admin/rpttourist')}>
                     <div className={cx('nav-icon')}>
                         <FontAwesomeIcon icon={faFileExcel} />
                     </div>
                     <div className={cx('nav-title')}>Báo cáo lượng khách</div>
                 </div>
-                <div className={cx('nav-item')} onClick={() => navigate('/admin/accounts')}>
+                <div className={cx('nav-item')} onClick={() => navigate('/admin/rptrevenue')}>
                     <div className={cx('nav-icon')}>
                         <FontAwesomeIcon icon={faFilePen} />
                     </div>

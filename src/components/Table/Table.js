@@ -902,7 +902,7 @@ const AdminContactEmailTable = ({ data, rowsPerPage }) => {
                             <td className={cx('tableAdminCell')}>{el.CEEmail}</td>
                             <td className={cx('tableAdminCell')}>{el.CEMobileNo}</td>
                             <td className={cx('tableAdminCell')}>{el.CETitle}</td>
-                            <td className={cx('tableAdminCell')}>{formatDate(el.CreateDTime)}</td>
+                            <td className={cx('tableAdminCell')}>{FormatDateTime(el.CreateDTime)}</td>
                             <td className={cx('tableAdminCell')}>
                                 <div className={cx('tableAdminCellAction')}>
                                     <button
@@ -1022,7 +1022,7 @@ const AdminNewsTable = ({ data, rowsPerPage }) => {
                             <td className={cx('tableAdminCell')}>{el.NewsNo}</td>
                             <td className={cx('tableAdminCell', 'text-overflow')}>{el.Title}</td>
                             <td className={cx('tableAdminCell')}>{el.NewsType}</td>
-                            <td className={cx('tableAdminCell')}>{el.PostDTime}</td>
+                            <td className={cx('tableAdminCell')}>{formatDate(el.PostDTime)}</td>
                             <td className={cx('tableAdminCell')}>
                                 {el.FlagActive === '1' ? (
                                     <div className={cx('active-stt')}>Active</div>
@@ -1060,6 +1060,247 @@ const AdminNewsTable = ({ data, rowsPerPage }) => {
     );
 };
 
+const AdminReportRevenueTable = ({ data, rowsPerPage }) => {
+    const [page, setPage] = useState(1);
+    const { slice, range } = useTable(data, page, rowsPerPage);
+
+    return (
+        <>
+            <table className={cx('tableAdmin')}>
+                <thead className={cx('tableAdminRowHeader')}>
+                    <tr>
+                        <th className={cx('tableAdminHeader')} style={{ width: '55px' }}>
+                            STT
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '150px' }}>
+                            Mã tuyến Tour
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '200px' }}>
+                            Tên tuyến Tour
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '100px' }}>
+                            SL Tour
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '130px' }}>
+                            SL lượt đặt
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '130px' }}>
+                            SL khách đặt
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '120px' }}>
+                            Đơn giá
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '120px' }}>
+                            Tổng tiền
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {slice.map((el, index) => (
+                        <tr className={cx('tableAdminRowItems')} key={index}>
+                            <td className={cx('tableAdminCell')}>{(page - 1) * rowsPerPage + index + 1}</td>
+                            <td className={cx('tableAdminCell')}>{el.TourCode}</td>
+                            <td className={cx('tableAdminCell', 'text-overflow')}>{el.TourName}</td>
+                            <td className={cx('tableAdminCell')}>{el.TourDetailQty}</td>
+                            <td className={cx('tableAdminCell')}>{el.BookingQty}</td>
+                            <td className={cx('tableAdminCell')}>{el.BookingTouristQty}</td>
+                            <td className={cx('tableAdminCell')}>{formatMoney(el.TourPrice, 0)}</td>
+                            <td className={cx('tableAdminCell')}>{formatMoney(el.BookingPrice, 0)}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
+        </>
+    );
+};
+
+const AdminReportTouristTable = ({ data, rowsPerPage }) => {
+    const [page, setPage] = useState(1);
+    const { slice, range } = useTable(data, page, rowsPerPage);
+
+    return (
+        <>
+            <table className={cx('tableAdmin')}>
+                <thead className={cx('tableAdminRowHeader')}>
+                    <tr>
+                        <th className={cx('tableAdminHeader')} style={{ width: '55px' }}>
+                            STT
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '150px' }}>
+                            Mã tuyến Tour
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '150px' }}>
+                            Mã Tour
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '130px' }}>
+                            Ngày đi
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '130px' }}>
+                            Ngày về
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '130px' }}>
+                            SL khách nhận
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '130px' }}>
+                            SL lượt đặt
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '130px' }}>
+                            SL khách đặt
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {slice.map((el, index) => (
+                        <tr className={cx('tableAdminRowItems')} key={index}>
+                            <td className={cx('tableAdminCell')}>{(page - 1) * rowsPerPage + index + 1}</td>
+                            <td className={cx('tableAdminCell')}>{el.TourCode}</td>
+                            <td className={cx('tableAdminCell')}>{el.IDNo}</td>
+                            <td className={cx('tableAdminCell')}>{formatDate(el.DateStart)}</td>
+                            <td className={cx('tableAdminCell')}>{formatDate(el.DateEnd)}</td>
+                            <td className={cx('tableAdminCell')}>{el.TourTouristNumber}</td>
+                            <td className={cx('tableAdminCell')}>{el.BookingCount}</td>
+                            <td className={cx('tableAdminCell')}>{el.BookingTouristQty}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
+        </>
+    );
+};
+
+const AdminTourGuideTable = ({ data, rowsPerPage }) => {
+    const navigate = useNavigate();
+    const [page, setPage] = useState(1);
+    const { slice, range } = useTable(data, page, rowsPerPage);
+
+    const handleDeleteTour = (id) => {
+        var myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+
+        var raw = JSON.stringify({
+            ServiceCode: 'WEBAPP',
+            Tid: '20181020.143018.986818',
+            TokenID: 'TOCKENID.IDOCNET',
+            RefreshToken: '',
+            UtcOffset: '7',
+            GwUserCode: 'idocNet.idn.Skycic.Inventory.Sv',
+            GwPassword: 'idocNet.idn.Skycic.Inventory.Sv',
+            WAUserCode: adminname,
+            WAUserPassword: adminpassword,
+            FlagIsDelete: '0',
+            FlagAppr: '0',
+            FlagIsEndUser: '0',
+            FuncType: null,
+            Ft_RecordStart: '0',
+            Ft_RecordCount: '1000',
+            Ft_WhereClause: '',
+            Ft_Cols_Upd: '',
+            Mst_TourGuide: {
+                TGCode: id,
+            },
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow',
+        };
+
+        fetch('/DAMstTourGuide/WA_Mst_TourGuide_Delete', requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                if (result.Success === true) {
+                    notify('Xóa thành công', 'success');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                } else {
+                    notify('Có lỗi xảy ra, vui lòng thử lại!', 'error');
+                }
+            })
+            .catch((error) => console.log('error', error));
+    };
+
+    return (
+        <>
+            <table className={cx('tableAdmin')}>
+                <thead className={cx('tableAdminRowHeader')}>
+                    <tr>
+                        <th className={cx('tableAdminHeader')} style={{ width: '55px' }}>
+                            STT
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '120px' }}>
+                            Mã HDV
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '150px' }}>
+                            Tên
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '120px' }}>
+                            CCCD
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '150px' }}>
+                            Địa chỉ
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '130px' }}>
+                            TGMobileNo
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '110px' }}>
+                            Trạng thái
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '120px' }}>
+                            <FontAwesomeIcon icon={faEllipsisVertical} />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {slice.map((el, index) => (
+                        <tr className={cx('tableAdminRowItems')} key={index}>
+                            <td className={cx('tableAdminCell')}>{(page - 1) * rowsPerPage + index + 1}</td>
+                            <td className={cx('tableAdminCell')}>{el.TGCode}</td>
+                            <td className={cx('tableAdminCell')}>{el.TGName}</td>
+                            <td className={cx('tableAdminCell')}>{el.TGIDCardNo}</td>
+                            <td className={cx('tableAdminCell', 'text-overflow')}>{el.TGAgentAddress}</td>
+                            <td className={cx('tableAdminCell')}>{el.TGMobileNo}</td>
+                            <td className={cx('tableAdminCell')}>
+                                {el.FlagActive === '1' ? (
+                                    <div className={cx('active-stt')}>Active</div>
+                                ) : (
+                                    <div className={cx('inactive-stt')}>Inactive</div>
+                                )}
+                            </td>
+                            <td className={cx('tableAdminCell')}>
+                                <div className={cx('tableAdminCellAction')}>
+                                    <button
+                                        className={cx('btn-update')}
+                                        onClick={() => {
+                                            navigate(`/admin/tourguide/${el.TGCode}`);
+                                        }}
+                                    >
+                                        <FontAwesomeIcon icon={faPenToSquare} />
+                                    </button>
+                                    <button
+                                        className={cx('btn-delete')}
+                                        onClick={() => {
+                                            window.confirm('Bạn có chắc chắn muốn xóa HDV này?') &&
+                                                handleDeleteTour(el.TGCode);
+                                        }}
+                                    >
+                                        <FontAwesomeIcon icon={faPenToSquare} />
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
+        </>
+    );
+};
+
 export {
     BookingHistoryTable,
     BookingDashboardTable,
@@ -1071,4 +1312,7 @@ export {
     AdminFAQTable,
     AdminContactEmailTable,
     AdminNewsTable,
+    AdminReportRevenueTable,
+    AdminReportTouristTable,
+    AdminTourGuideTable,
 };
