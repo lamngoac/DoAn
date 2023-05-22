@@ -46,6 +46,8 @@ const routes = {
     adminTourGuides: '/admin/tourguides',
     adminTourGuideCreate: '/admin/tourguide/create',
     adminTourGuideUpdate: '/admin/tourguide/:slug',
+    adminBooking: '/admin/booking',
+    adminBookingDetail: '/admin/booking/:slug',
 };
 
 export default routes;

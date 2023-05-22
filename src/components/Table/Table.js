@@ -1301,6 +1301,73 @@ const AdminTourGuideTable = ({ data, rowsPerPage }) => {
     );
 };
 
+const AdminBookingTable = ({ data, rowsPerPage }) => {
+    const navigate = useNavigate();
+    const [page, setPage] = useState(1);
+    const { slice, range } = useTable(data, page, rowsPerPage);
+
+    return (
+        <>
+            <table className={cx('tableAdmin')}>
+                <thead className={cx('tableAdminRowHeader')}>
+                    <tr>
+                        <th className={cx('tableAdminHeader')} style={{ width: '55px' }}>
+                            STT
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '150px' }}>
+                            Mã đặt tour
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '150px' }}>
+                            Mã tour
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '130px' }}>
+                            Ngày khởi hành
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '120px' }}>
+                            SL chỗ đặt
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '130px' }}>
+                            Tài khoản đặt
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '120px' }}>
+                            Thời gian đặt
+                        </th>
+                        <th className={cx('tableAdminHeader')} style={{ width: '100px' }}>
+                            <FontAwesomeIcon icon={faEllipsisVertical} />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {slice.map((el, index) => (
+                        <tr className={cx('tableAdminRowItems')} key={index}>
+                            <td className={cx('tableAdminCell')}>{(page - 1) * rowsPerPage + index + 1}</td>
+                            <td className={cx('tableAdminCell')}>{el.BookNo}</td>
+                            <td className={cx('tableAdminCell')}>{el.IDNo}</td>
+                            <td className={cx('tableAdminCell')}>{el.mtd_DateStart}</td>
+                            <td className={cx('tableAdminCell')}>{el.Qty}</td>
+                            <td className={cx('tableAdminCell')}>{el.UserCode}</td>
+                            <td className={cx('tableAdminCell')}>{FormatDateTime(el.CreateDTime)}</td>
+                            <td className={cx('tableAdminCell')}>
+                                <div className={cx('tableAdminCellAction')}>
+                                    <button
+                                        className={cx('btn-update')}
+                                        onClick={() => {
+                                            navigate(`/admin/booking/${el.BookNo}`);
+                                        }}
+                                    >
+                                        <FontAwesomeIcon icon={faPenToSquare} />
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
+        </>
+    );
+};
+
 export {
     BookingHistoryTable,
     BookingDashboardTable,
@@ -1315,4 +1382,5 @@ export {
     AdminReportRevenueTable,
     AdminReportTouristTable,
     AdminTourGuideTable,
+    AdminBookingTable,
 };

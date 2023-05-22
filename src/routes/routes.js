@@ -51,6 +51,8 @@ import AdminRptTourist from '~/pages/Admin/RptTourist';
 import AdminTourGuide from '~/pages/Admin/TourGuide';
 import AdminTourGuideCreate from '~/pages/Admin/TourGuide/Create';
 import AdminTourGuideUpdate from '~/pages/Admin/TourGuide/Update';
+import AdminBooking from '~/pages/Admin/Booking';
+import AdminBookingDetail from '~/pages/Admin/Booking/Detail';
 
 // Public routes
 const publicRoutes = [
@@ -101,6 +103,8 @@ const publicRoutes = [
     { path: config.routes.adminTourGuides, component: AdminTourGuide, layout: AdminLayout },
     { path: config.routes.adminTourGuideCreate, component: AdminTourGuideCreate, layout: AdminLayout },
     { path: config.routes.adminTourGuideUpdate, component: AdminTourGuideUpdate, layout: AdminLayout },
+    { path: config.routes.adminBooking, component: AdminBooking, layout: AdminLayout },
+    { path: config.routes.adminBookingDetail, component: AdminBookingDetail, layout: AdminLayout },
 ];
 
 // Private routes

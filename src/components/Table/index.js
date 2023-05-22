@@ -12,4 +12,5 @@ export {
     AdminReportRevenueTable,
     AdminReportTouristTable,
     AdminTourGuideTable,
+    AdminBookingTable,
 } from './Table';

@@ -44,6 +44,12 @@ function AdminSidebar() {
                     </div>
                     <div className={cx('nav-title')}>Quản lý lịch trình Tour</div>
                 </div>
+                <div className={cx('nav-item')} onClick={() => navigate('/admin/booking')}>
+                    <div className={cx('nav-icon')}>
+                        <FontAwesomeIcon icon={faCircleInfo} />
+                    </div>
+                    <div className={cx('nav-title')}>Quản lý Đặt Tour</div>
+                </div>
                 <div className={cx('nav-item')} onClick={() => navigate('/admin/tourdetails')}>
                     <div className={cx('nav-icon')}>
                         <FontAwesomeIcon icon={faCircleInfo} />
